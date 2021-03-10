@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Andrew J. Sims" />
+
+
+<title>A directed graph solution to a New Scientist puzzle</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">A directed graph solution to a <em>New Scientist</em> puzzle</h1>
+<h3 class="subtitle">Burger run</h3>
+<h4 class="author">Andrew J. Sims</h4>
+<h4 class="date">18th June 2020</h4>
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>This puzzle was published in <em>New Scientist</em> in June 2020.<span class="citation"><sup>1</sup></span> It is a practical example of a problem in graph theory. This vignette explains how the puzzle can be solved with <code>redecison</code>.</p>
+</div>
+<div id="the-puzzle" class="section level1">
+<h1>The puzzle</h1>
+<p>Three friends agree to drive from A to B via the shortest road possible (driving down or right at all times). They are hungry, so also want to drive through a Big Burger restaurant, marked in red. They are arguing about how many shortest routes will pass through exactly one Big Burger. Xenia: “I reckon there are 10.” Yolanda: “I’d say more like 20.” Zara: “No you’re both wrong, I bet there are more than 50.” Who is right, or closest to right?</p>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+</div>
+<div id="constructing-the-graph" class="section level1">
+<h1>Constructing the graph</h1>
+<p>The grid has 25 nodes and 40 edges (20 horizontal and 20 vertical). These form a directed graph because it is allowed to drive down or right only. Seven of the edges are defined as “Big Burger” edges. Because it is not possible to find a path from any node which revisits that node, the graph is acyclic (a directed acyclic graph, DAG).</p>
+<p>Although it possible to construct the graph by creating 25 node objects explicitly, it is more compact to create a list of vertices in a loop construct. Indices <span class="math inline">\(i = [1 .. 5]\)</span> and <span class="math inline">\(j = [1 .. 5]\)</span> are used to identify grid intersections in the vertical and horizontal directions respectively. Each node is labelled as <span class="math inline">\(N_{i,j}\)</span> and the index of node <span class="math inline">\(N_{i,j}\)</span> in the list is <span class="math inline">\(5(i-1)+j\)</span>.</p>
+<p>Similarly, the 40 edges (arrows) are constructed more compactly in a list, with horizontal edges being labelled <span class="math inline">\(H_{i,j}\)</span> (the horizontal edge joining node <span class="math inline">\(N_{i,j}\)</span> to node <span class="math inline">\(N_{i,j+1}\)</span>) and the vertical edges similarly as <span class="math inline">\(V_{i,j}\)</span>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create vertices</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    V <span class="ot">&lt;-</span> <span class="fu">c</span>(V, Node<span class="sc">$</span><span class="fu">new</span>(<span class="fu">paste</span>(<span class="st">&quot;N&quot;</span>,i,j,<span class="at">sep=</span><span class="st">&quot;&quot;</span>)))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># create edges</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    E <span class="ot">&lt;-</span> <span class="fu">c</span>(E, Arrow<span class="sc">$</span><span class="fu">new</span>(V[[<span class="dv">5</span><span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j]], V[[<span class="dv">5</span><span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j<span class="sc">+</span><span class="dv">1</span>]], <span class="fu">paste</span>(<span class="st">&quot;H&quot;</span>,i,j,<span class="at">sep=</span><span class="st">&quot;&quot;</span>)))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>} </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    E <span class="ot">&lt;-</span> <span class="fu">c</span>(E, Arrow<span class="sc">$</span><span class="fu">new</span>(V[[<span class="dv">5</span><span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j]], V[[<span class="dv">5</span><span class="sc">*</span>i<span class="sc">+</span>j]], <span class="fu">paste</span>(<span class="st">&quot;V&quot;</span>,i,j,<span class="at">sep=</span><span class="st">&quot;&quot;</span>)))</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>} </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># create graph</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>G <span class="ot">&lt;-</span> Digraph<span class="sc">$</span><span class="fu">new</span>(V,E)</span></code></pre></div>
+</div>
+<div id="finding-the-paths" class="section level1">
+<h1>Finding the paths</h1>
+<p>Method <code>paths</code> finds all possible paths between any two nodes, where a <em>path</em> is defined as a sequence of distinct and adjacent nodes. Because the restaurants are specific edges, each path is converted to a <em>walk</em>, which is a path defined as sequence of connected, non-repeating edges.</p>
+<p>In this case, the number of restaurants traversed by each path is counted by comparing the label associated with each edge in each path with the labels of the edges which contain a restaurant.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get all paths from A to B</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> V[[<span class="dv">1</span>]]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> V[[<span class="dv">25</span>]]</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> G<span class="sc">$</span><span class="fu">paths</span>(A,B)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># convert paths to walks</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>W <span class="ot">&lt;-</span> <span class="fu">lapply</span>(P,<span class="cf">function</span>(p){G<span class="sc">$</span><span class="fu">walk</span>(p)})</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># count and tabulate how many special edges each walk traverses</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>BB <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;V11&quot;</span>, <span class="st">&quot;H22&quot;</span>, <span class="st">&quot;V25&quot;</span>, <span class="st">&quot;H33&quot;</span>, <span class="st">&quot;V32&quot;</span>, <span class="st">&quot;H44&quot;</span>, <span class="st">&quot;V43&quot;</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>nw <span class="ot">&lt;-</span> <span class="fu">sapply</span>(W, <span class="cf">function</span>(w) {</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  lv <span class="ot">&lt;-</span> <span class="fu">sapply</span>(w, <span class="cf">function</span>(e) {e<span class="sc">$</span><span class="fu">label</span>() <span class="sc">%in%</span> BB}) </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">sum</span>(lv))</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># tabulate </span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>ct <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">table</span>(nw))</span></code></pre></div>
+</div>
+<div id="solution-found-by-rdecision" class="section level1">
+<h1>Solution found by <code>rdecision</code></h1>
+<p>The number of paths which pass through exactly one Big Burger is 23. In total there are 70 paths from A to B, with the number of restaurants <span class="math inline">\(n\)</span>, traversed by each path as follows:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">n</th>
+<th align="right">frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="right">23</td>
+</tr>
+<tr class="odd">
+<td align="left">2</td>
+<td align="right">27</td>
+</tr>
+<tr class="even">
+<td align="left">3</td>
+<td align="right">13</td>
+</tr>
+<tr class="odd">
+<td align="left">4</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="provided-solution" class="section level1">
+<h1>Provided solution</h1>
+<p>Yolanda’s estimate is closest - there are 23 shortest routes from A to B that pass through exactly one Big Burger. One way to solve this kind of puzzle is to systematically work from A and keep track of how many ways there are of reaching each point. With this problem, you should keep a separate count of how many ways there are of reaching each point after (a) zero or (b) one Big Burger visits. For line segments that contain a Big Burger, (b) becomes equal to (a) then becomes equal to 0 with the old value for (b) effectively discarded.</p>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-bodycombe2020" class="csl-entry">
+<div class="csl-left-margin">1 </div><div class="csl-right-inline">Bodycombe D. Burger run. <em>New Scientist</em> 2020;<strong>246</strong>:54.</div>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
