@@ -1,15 +1,4 @@
 
-# setequal function for Nodes
-nodesetequal <- function(A,B) {
-  AinB <- all(sapply(A, function(a) {
-    return(any(sapply(B, function(b){identical(a,b)})))
-  }))
-  BinA <- all(sapply(B, function(b) {
-    return(any(sapply(A, function(a){identical(a,b)})))
-  }))
-  return(AinB & BinA)
-}
- 
 # tests of digraph creation
 test_that("incorrect node and edge types are rejected", {
   n1 <- Node$new()
@@ -80,16 +69,16 @@ test_that("adjacency matrix has correct properties", {
   e1 <- Arrow$new(n1,n2)
   G <- Digraph$new(V=list(n1,n2),A=list(e1))
   A <- G$digraph_adjacency_matrix()
-  expect_true(is.null(dimnames(A)))
+  expect_null(dimnames(A))
   n1 <- Node$new("n1")
   n2 <- Node$new("n2")
   e1 <- Arrow$new(n1,n2)
   G <- Digraph$new(V=list(n1,n2),A=list(e1))
   A <- G$digraph_adjacency_matrix()
   dn <- dimnames(A)
-  expect_equal(names(dn), c("out.node", "in.node"))
-  expect_equal(dn$out.node, c("n1", "n2"))
-  expect_equal(dn$in.node, c("n1", "n2"))
+  expect_setequal(names(dn), c("out.node", "in.node"))
+  expect_setequal(dn$out.node, c("n1", "n2"))
+  expect_setequal(dn$in.node, c("n1", "n2"))
   expect_equal(sum(A-matrix(c(0,1,0,0),nrow=2,byrow=TRUE)),0)
   # boolean
   n1 <- Node$new("n1")
@@ -113,7 +102,7 @@ test_that("incidence matrix has correct properties", {
   e1 <- Arrow$new(n1,n2)
   G <- Digraph$new(V=list(n1,n2),A=list(e1))
   B <- G$digraph_incidence_matrix()
-  expect_true(is.null(dimnames(B)))
+  expect_null(dimnames(B))
   n1 <- Node$new("n1")
   n2 <- Node$new("n2")
   ea <- Arrow$new(n1,n2,"a")
@@ -121,9 +110,9 @@ test_that("incidence matrix has correct properties", {
   G <- Digraph$new(V=list(n1,n2),A=list(ea,eb))
   B <- G$digraph_incidence_matrix()
   dn <- dimnames(B)
-  expect_equal(names(dn), c("vertex", "edge"))
-  expect_equal(dn$vertex, c("n1", "n2"))
-  expect_equal(dn$edge, c("a", "b"))
+  expect_setequal(names(dn), c("vertex", "edge"))
+  expect_setequal(dn$vertex, c("n1", "n2"))
+  expect_setequal(dn$edge, c("a", "b"))
   expect_equal(sum(B-matrix(c(-1,1,1,-1),nrow=2,byrow=TRUE)),0)
 })
 
@@ -212,12 +201,12 @@ test_that("all paths in a 4-node graph with cycle are discovered", {
   expect_silent(G$walk(list()))
   # test that all paths are found
   P <- G$paths(n2,n3)
-  expect_equal(length(P),3)
+  expect_length(P,3)
   PE <- list(c(n2,n1,n3), c(n2,n0,n3), c(n2,n0,n1,n3))
   nmatch <- 0
   for (p in P) {
     for (pe in PE) {
-      if (nodesetequal(p,pe)) {nmatch <- nmatch+1}
+      if (R6setequal(p,pe)) {nmatch <- nmatch+1}
     }
   }
   expect_equal(nmatch,3)
@@ -245,15 +234,15 @@ test_that("example of 4 node digraph with cycle has correct properties", {
   expect_error(G$direct_successors(42), class="invalid_vertex")
   e <- Node$new('e')
   expect_error(G$direct_successors(e), class="not_in_graph")
-  expect_true(nodesetequal(G$direct_successors(a), list(b,d)))
-  expect_true(nodesetequal(G$direct_successors(c), list(a)))
+  expect_R6setequal(G$direct_successors(a), list(b,d))
+  expect_R6setequal(G$direct_successors(c), list(a))
   expect_true(length(G$direct_successors(d))==0)
   #
   expect_error(G$direct_predecessors(42), class="invalid_vertex")
   expect_error(G$direct_predecessors(e), class="not_in_graph")
-  expect_true(nodesetequal(G$direct_predecessors(a), list(c)))
-  expect_true(nodesetequal(G$direct_predecessors(c), list(b)))
-  expect_true(nodesetequal(G$direct_predecessors(d), list(a)))
+  expect_R6setequal(G$direct_predecessors(a), list(c))
+  expect_R6setequal(G$direct_predecessors(c), list(b))
+  expect_R6setequal(G$direct_predecessors(d), list(a))
   #
   expect_false(G$is_acyclic())
 })
@@ -306,5 +295,20 @@ test_that("rdecision solves New Scientist Puzzle 62", {
   })
   ct <- as.data.frame(table(nw))
   # check that 23 paths traverse one special edge
-  expect_equal(ct$Freq[ct$nw==1],23)
+  expect_intol(ct$Freq[ct$nw==1],23,0.1)
+})
+
+# create DOT representation of a graph (Sonnenberg & Beck, 1993, Fig 3)
+test_that("DOT file of S&B fig 3 is as expected", {
+  s1 <- Node$new("Well")
+  s2 <- Node$new("Disabled")
+  s3 <- Node$new("Dead")
+  e1 <- Arrow$new(s1, s1)
+  e2 <- Arrow$new(s1, s2, "ill")
+  e3 <- Arrow$new(s1, s3)
+  e4 <- Arrow$new(s2, s2)
+  e5 <- Arrow$new(s2, s3)
+  e6 <- Arrow$new(s3, s3)
+  G <- Digraph$new(V=list(s1, s2, s3), A=list(e1,e2,e3,e4,e5,e6))
+  expect_silent(DOT <- G$as_DOT())
 })

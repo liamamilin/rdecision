@@ -4,10 +4,14 @@
 #' An R6 class to represent a digraph (a directed graph).
 #' 
 #' @details 
-#' Encapsulates, and provides methods for computation and checking of directed
+#' Encapsulates and provides methods for computation and checking of directed
 #' graphs (digraphs). Inherits from class Graph. 
 #'
 #' @references{ 
+#'   Gansner ER, Koutsofios E, North SC, Vo K-P. A technique for drawing
+#'   directed graphs. \emph{IEEE Transactions on Software Engineering},
+#'   1993;\bold{19}:214–30, \doi{10.1109/32.221135}.
+#' 
 #'   Gross JL, Yellen J, Zhang P. Handbook of Graph Theory. Second edition, 
 #'   Chapman and Hall/CRC.; 2013, \doi{10.1201/b16132}.
 #'
@@ -25,6 +29,7 @@ Digraph <- R6::R6Class(
   lock_class = TRUE,
   inherit = Graph,
   private = list(
+    # class variables
     AD = NULL,    # adjacency matrix for digraph
     BD = NULL     # incidence matrix for digraph
   ),
@@ -388,6 +393,45 @@ Digraph <- R6::R6Class(
       E <- lapply(W, function(e){private$E[[e]]})
       # return the walk 
       return(E)
+    },
+    
+    #' @description Writes a representation of the digraph in the 
+    #' \code{graphviz} DOT language
+    #' (\url{http://graphviz.org/doc/info/lang.html}) for drawing with one
+    #' of the \code{graphviz} tools including \code{dot} (Gansner, 1993). 
+    #' @return A character vector. Intended for passing to \code{writeLines}
+    #' for saving as a text file.
+    as_DOT = function() {
+      # check whether all nodes have labels
+      nodelab <- all(sapply(private$V, function(v){nchar(v$label())>0}))
+      # create stream vector (header+edges+footer)
+      indent <- "  "
+      o <- vector(mode = "character", length = 0)
+      # write header
+      o[length(o)+1] <- "digraph rdecision {"
+      o[length(o)+1] <- paste0(indent, 'size="7,7" ;')
+      o[length(o)+1] <- paste0(indent, 'rankdir=LR ;')
+      # write edges
+      for (e in private$E) {
+        s <- e$source()
+        t <- e$target()
+        o[length(o)+1] <- paste(
+          indent,
+          ifelse(nodelab, paste0('"',s$label(),'"'), self$vertex_index(s)),
+          "->",
+          ifelse(nodelab, paste0('"',t$label(),'"'), self$vertex_index(t)),
+          ifelse(
+            nchar(e$label())>0, 
+            paste("[", "label = ", paste0('"', e$label(), '"'), "]"),
+            ""
+          ), 
+          ";" 
+        )  
+      }
+      # footer
+      o[length(o)+1] <- "}"
+      # return the stream
+      return(o)
     }
   ) 
 )

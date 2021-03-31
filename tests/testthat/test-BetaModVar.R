@@ -30,7 +30,7 @@ test_that("get() is initialized correctly", {
   a <- 2
   b <- 5
   B <- BetaModVar$new("beta", "GBP", a, b)
-  expect_true(abs(B$get()-a/(a+b))<0.01)
+  expect_intol(B$get(), a/(a+b), 0.02)
 })
 
 test_that("set(current) works as intended", {
@@ -47,14 +47,16 @@ test_that("mean, mode, sd and quantiles are returned correctly", {
   alpha <- 2
   beta <- 5
   b <- BetaModVar$new("beta", "GBP", alpha, beta)
-  expect_true(abs(b$mean()-alpha/(alpha+beta))<0.01)
-  var <- (alpha*beta)/((alpha+beta+1)*(alpha+beta)^2)
-  expect_true(abs(b$SD()-sqrt(var))<0.01)
-  expect_true(abs(b$mode()-(alpha-1)/(alpha+beta-2))<0.01)
+  m <- alpha/(alpha+beta)
+  v <- (alpha*beta)/((alpha+beta+1)*(alpha+beta)^2)
+  o <- (alpha-1)/(alpha+beta-2)
+  expect_intol(b$mean(), m, 0.01)
+  expect_intol(b$SD(), sqrt(v), 0.01)
+  expect_intol(b$mode(), o, 0.01)
   probs <- c(0.025, 0.975)
   q <- b$quantile(probs)
-  expect_true(abs(q[1]-0.043)<0.005)
-  expect_true(abs(q[2]-0.641)<0.005)
+  expect_intol(q[1], 0.043, 0.01)
+  expect_intol(q[2], 0.641, 0.01)
 })
 
 test_that("quantile function checks inputs and has correct output", {
@@ -70,7 +72,7 @@ test_that("quantile function checks inputs and has correct output", {
   probs <- c(0.1, 0.4, 1.5)
   expect_error(b$quantile(probs), class="probs_out_of_range")
   probs <- c(0.1, 0.2, 0.5)
-  expect_equal(length(b$quantile(probs)),3)
+  expect_length(b$quantile(probs),3)
 })
 
 test_that("Extreme mode values are defined", {
@@ -95,10 +97,14 @@ test_that("Extreme mode values are defined", {
 test_that("random sampling is from a Beta distribution", {
   alpha <- 2
   beta <- 5
+  n <- 1000
   b <- BetaModVar$new("beta", "GBP", alpha, beta)
-  samp <- b$r(1000)
-  expect_equal(length(samp), 1000)
-  expect_true(abs(mean(samp)-alpha/(alpha+beta))<0.1)
-  var <- (alpha*beta)/((alpha+beta+1)*(alpha+beta)^2)
-  expect_true(abs(sd(samp)-sqrt(var))<0.1)
+  osamp <- b$r(n)
+  expect_length(osamp, n)
+  # 99.9% confidence limits; expected test failure rate is 0.1%, 
+  # skip for CRAN
+  skip_on_cran()
+  esamp <- rbeta(n, shape1=alpha, shape2=beta)
+  ht <- ks.test(osamp, esamp)
+  expect_true(ht$p.value > 0.001)
 })
