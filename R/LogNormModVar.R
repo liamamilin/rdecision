@@ -47,13 +47,13 @@
 #' @note 
 #' The log normal distribution may be used to model the uncertainty in 
 #' an estimate of relative risk (Briggs 2006, p90). If a relative risk 
-#' estimate is available with a 95% confidence interval, the \verb{"LN7"} 
+#' estimate is available with a 95\% confidence interval, the \verb{"LN7"} 
 #' parametrization
 #' allows the uncertainty distribution to be specified directly. For example, 
-#' if RR = 0.67 with 95% confidence interval 0.53 to 0.84 (Leaper, 2016), it 
+#' if RR = 0.67 with 95\% confidence interval 0.53 to 0.84 (Leaper, 2016), it 
 #' can be modelled with
 #' \code{LogNormModVar$new("rr", "RR", p1=0.67, 
-#' p2=(0.84-0.53)/(2*1.96)), "LN7"}.
+#' p2=(0.84-0.53)/(2*1.96)), "LN7")}.
 #' 
 #' @docType class
 #' @author Andrew J. Sims \email{andrew.sims@@newcastle.ac.uk}
@@ -75,12 +75,12 @@ LogNormModVar <- R6::R6Class(
     #' @param description A character string describing the variable.
     #' @param units Units of the quantity; character string.
     #' @param p1 First hyperparameter, a measure of location. 
-    #'        See 'Details'.
+    #'        See \emph{Details}.
     #' @param p2 Second hyperparameter, a measure of spread.
-    #'        See 'Details'.
+    #'        See \emph{Details}.
     #' @param parametrization A character string taking one of the values
-    #'        \verb{"LN1"} (default) through \verb{"LN7"} (see 'Details').
-    #' @return A \verb{LogNormModVar} object.
+    #'        \verb{"LN1"} (default) through \verb{"LN7"} (see \emph{Details}).
+    #' @return A \code{LogNormModVar} object.
     initialize = function(description, units, p1, p2, parametrization='LN1') {
       super$initialize(description, units)
       # check that p1 and p2 are numeric
@@ -136,7 +136,7 @@ LogNormModVar <- R6::R6Class(
     #' Tests whether the model variable is probabilistic, i.e. a random
     #' variable that follows a distribution, or an expression involving
     #' random variables, some of which follow distributions. 
-    #' @return TRUE if probabilistic
+    #' @return \code{TRUE} if probabilistic
     is_probabilistic = function() {
       return(TRUE)
     },

@@ -1,6 +1,6 @@
 Package: rdecision
 Title: Decision Analytic Modelling in Health Economics
-Version: 1.0.3
+Version: 1.0.4
 Authors@R: c(
   person(given="Andrew", family="Sims", 
          email = "andrew.sims@newcastle.ac.uk", 
@@ -27,9 +27,9 @@ RoxygenNote: 7.1.1
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2021-03-30 21:56:10 UTC; andrew
+Packaged: 2021-05-05 16:04:06 UTC; najs3
 Author: Andrew Sims [aut, cre] (<https://orcid.org/0000-0002-9553-7278>),
   Kim Fairbairn [aut] (<https://orcid.org/0000-0001-5108-6279>)
 Maintainer: Andrew Sims <andrew.sims@newcastle.ac.uk>
 Repository: CRAN
-Date/Publication: 2021-03-31 13:20:06 UTC
+Date/Publication: 2021-05-05 18:10:11 UTC

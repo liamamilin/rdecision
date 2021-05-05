@@ -17,22 +17,22 @@ conditions:
 there must be a unique path from the root to each node.
 In graph theory terminology, the directed graph formed by the nodes
 and edges must be an \dfn{arborescence}.}
-\item{Each node must inherit from one of \verb{DecisionNode},
-\code{ChanceNode} or \verb{LeafNode}. Formally the set of vertices
+\item{Each node must inherit from one of \code{DecisionNode},
+\code{ChanceNode} or \code{LeafNode}. Formally the set of vertices
 must be a disjoint union of sets of decision nodes, chance nodes
 and leaf nodes.}
 \item{All and only leaf nodes must have no children.}
-\item{Each edge must inherit from either \verb{Action} or
+\item{Each edge must inherit from either \code{Action} or
 \code{Reaction}.}
 \item{All and only edges that have source endpoints joined to 
-decision nodes must inherit from \verb{Action}.}
+decision nodes must inherit from \code{Action}.}
 \item{All and only edges that have source endpoints joined to 
-chance nodes must inherit from \verb{Reaction}.}
+chance nodes must inherit from \code{Reaction}.}
 \item{The sum of probabilities of each set of reaction edges 
 with a common source endpoint must be 1.}
-\item{Each \verb{DecisionNode} must have a label, and the labels of all
+\item{Each \code{DecisionNode} must have a label, and the labels of all
 \code{DecisionNodes} must be unique within the model.}
-\item{Each \verb{Action} must have a label, and the labels of  
+\item{Each \code{Action} must have a label, and the labels of  
 \code{Action}s that share a common source endpoint must be unique.}
 }
 }
@@ -47,7 +47,7 @@ with a common source endpoint must be 1.}
   \emph{Value in Health} 2012;\bold{15}:835–42, 
   \doi{10.1016/j.jval.2012.04.014}.
 
-  Kamiński B, Jakubczyk M, Szufel P. A framework for sensitivity analysis of
+  Kaminski B, Jakubczyk M, Szufel P. A framework for sensitivity analysis of
   decision trees. \emph{Central European Journal of Operational Research}
   2018;\bold{26}:135–59, \doi{10.1007/s10100-017-0479-6}.
 }
@@ -75,6 +75,7 @@ Andrew J. Sims \email{andrew.sims@newcastle.ac.uk}
 \item \href{#method-evaluate_walks}{\code{DecisionTree$evaluate_walks()}}
 \item \href{#method-evaluate}{\code{DecisionTree$evaluate()}}
 \item \href{#method-tornado}{\code{DecisionTree$tornado()}}
+\item \href{#method-threshold}{\code{DecisionTree$threshold()}}
 \item \href{#method-clone}{\code{DecisionTree$clone()}}
 }
 }
@@ -135,7 +136,7 @@ in the details section of this class.
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A \verb{DecisionTree} object
+A \code{DecisionTree} object
 }
 }
 \if{html}{\out{<hr>}}
@@ -156,7 +157,7 @@ of "node", "label" or "index".}
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A list of \verb{DecisionNode} objects (for what="node"); a list
+A list of \code{DecisionNode} objects (for what="node"); a list
 of character strings (for what="label"); or a list of integer indexes of 
 the decision nodes (for what="index").
 }
@@ -171,7 +172,7 @@ Find the chance nodes in the tree.
 }
 
 \subsection{Returns}{
-A list of \verb{ChanceNode} objects.
+A list of \code{ChanceNode} objects.
 }
 }
 \if{html}{\out{<hr>}}
@@ -187,13 +188,13 @@ Find the leaf nodes in the tree.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{what}}{One of "node" (returns Node objects), "label" (returns the
-leaf node labels) or "index" (returns the vertex index of the leaf
+leaf node labels) or "index" (returns the vertex indexes of the leaf
 nodes).}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A list of \verb{LeafNode} objects (for what="node"); a list
+A list of \code{LeafNode} objects (for what="node"); a list
 of character strings (for what="label"); or a list of integer indexes of 
 the decision nodes (for what="index").
 }
@@ -215,21 +216,21 @@ Return the edges that have the specified decision node as their source.
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A list of \verb{Action} edges.
+A list of \code{Action} edges.
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-modvars"></a>}}
 \if{latex}{\out{\hypertarget{method-modvars}{}}}
 \subsection{Method \code{modvars()}}{
-Find all the model variables of type \verb{ModVar} that have been 
+Find all the model variables of type \code{ModVar} that have been 
 specified as values associated with the nodes and edges of the tree.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DecisionTree$modvars()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
-A list of \verb{ModVar}s.
+A list of \code{ModVar}s.
 }
 }
 \if{html}{\out{<hr>}}
@@ -252,22 +253,22 @@ variables should be included in the tabulation.}
 \subsection{Returns}{
 Data frame with one row per model variable, as follows:
 \describe{
-\item{Description}{As given at initialization.}
-\item{Units}{Units of the variable.}
-\item{Distribution}{Either the uncertainty distribution, if
+\item{\code{Description}}{As given at initialization.}
+\item{\code{Units}}{Units of the variable.}
+\item{\code{Distribution}}{Either the uncertainty distribution, if
 it is a regular model variable, or the expression used to create it,
-if it is an \verb{ExprModVar}.}
-\item{Mean}{Mean; calculated from means of operands if
+if it is an \code{ExprModVar}.}
+\item{\code{Mean}}{Mean; calculated from means of operands if
 an expression.}
-\item{E}{Expectation; estimated from random sample if expression, 
+\item{\code{E}}{Expectation; estimated from random sample if expression, 
 mean otherwise.}
-\item{SD}{Standard deviation; estimated from random sample if
+\item{\code{SD}}{Standard deviation; estimated from random sample if
 expression, exact value otherwise.}
-\item{Q2.5}{p=0.025 quantile; estimated from random sample if
+\item{\code{Q2.5}}{p=0.025 quantile; estimated from random sample if
 expression, exact value otherwise.}
-\item{Q97.5}{p=0.975 quantile; estimated from random sample if
+\item{\code{Q97.5}}{p=0.975 quantile; estimated from random sample if
 expression, exact value otherwise.}
-\item{Est}{TRUE if the quantiles and SD have been estimated by 
+\item{\code{Est}}{TRUE if the quantiles and SD have been estimated by 
 random sampling.}
 }
 }
@@ -313,8 +314,7 @@ strategy for this decision tree.
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-TRUE if the strategy is valid for this tree. Throws an
-exception if the argument is not a list of Action edges. Returns
+TRUE if the strategy is valid for this tree. Returns
 FALSE if the list of Action edges are not a valid strategy.
 }
 }
@@ -346,7 +346,8 @@ single strategy into a readable form.}
 \subsection{Returns}{
 A data frame where each row is a potential strategy 
 and each column is a Decision Node. Values are either the index of each
-action edge, or their label.
+action edge, or their label. The row names are the edge labels of each
+strategy, concatenated with underscores.
 }
 }
 \if{html}{\out{<hr>}}
@@ -364,8 +365,8 @@ that do not pass a decision node.
 \subsection{Returns}{
 A data frame, where each row is a path walked in a strategy. The
 structure is similar to that returned by \code{strategy_table} but 
-includes an extra column, 'Leaf' which gives the leaf node index of each
-path, and there is one row for each path in each strategy.
+includes an extra column, \code{Leaf} which gives the leaf node index of 
+each path, and there is one row for each path in each strategy.
 }
 }
 \if{html}{\out{<hr>}}
@@ -391,27 +392,30 @@ paths in a tree.}
 \subsection{Details}{
 There is minimal checking of the argument because this function 
 is intended to be called repeatedly during tree evaluation, including
-PSA. The argument P is expected to be obtained from 
-\code{root_to_leaf_paths}.
+PSA.
 }
 
 \subsection{Returns}{
 A matrix (pay-off table) with one row per path and columns
 organized as follows:
 \describe{
-\item{Leaf}{The unique identifier of the path, taken to be the index 
-of the terminal (leaf) node.}
-\item{Probability}{The probability of traversing the pathway. }
-\item{Path.Cost}{The cost of traversing the pathway.}
-\item{Path.Benefit}{The benefit derived from traversing the pathway.}
-\item{Path.Utility}{The utility associated with the outcome (leaf node).}
-\item{Path.QALY}{The QALYs associated with the outcome (leaf node).}
-\item{Cost}{Path.Cost \eqn{*} probability of traversing the pathway.}
-\item{Benefit}{Path.Benefit \eqn{*} probability of traversing the 
-pathway.}
-\item{Utility}{Path.Utility \eqn{*} probability of traversing the
-pathway.}
-\item{QALY}{Path.QALY \eqn{*} probability of traversing the
+\item{\code{Leaf}}{The unique identifier of the path, taken to be the 
+index of the terminal (leaf) node.}
+\item{\code{Probability}}{The probability of traversing the pathway. }
+\item{\code{Path.Cost}}{The cost of traversing the pathway.}
+\item{\code{Path.Benefit}}{The benefit derived from traversing the 
+      pathway.}
+\item{\code{Path.Utility}}{The utility associated with the outcome (leaf
+      node).}
+\item{\code{Path.QALY}}{The QALYs associated with the outcome (leaf 
+      node).}
+\item{\code{Cost}}{\code{Path.Cost} \eqn{*} probability of traversing the 
+      pathway.}
+\item{\code{Benefit}}{\code{Path.Benefit} \eqn{*} probability of 
+traversing the pathway.}
+\item{\code{Utility}}{\code{Path.Utility} \eqn{*} probability of 
+traversing the pathway.}
+\item{\code{QALY}}{\code{Path.QALY} \eqn{*} probability of traversing the
 pathway.}
 }
 }
@@ -422,8 +426,8 @@ pathway.}
 \subsection{Method \code{evaluate()}}{
 Evaluate each strategy. Starting with the root, the function
 works though all possible paths to leaf nodes and computes the 
-probability, cost, benefit and utility of each, then aggregates 
-by strategy.
+probability, cost, benefit and utility of each, then optionally 
+aggregates by strategy or run.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DecisionTree$evaluate(setvars = "expected", N = 1, by = "strategy")}\if{html}{\out{</div>}}
 }
@@ -435,36 +439,76 @@ by strategy.
 its mean value), "random" (sample each variable from its uncertainty 
 distribution and evaluate the model), "q2.5", "q50", "q97.5" (set each
 model variable to its 2.5\%, 50\% or 97.5\% quantile, respectively, and
-evaluate the model), "current" (leave each model variable at its current
-value prior to calling the function and evaluate the model).}
+evaluate the model) or "current" (leave each model variable at its 
+current value prior to calling the function and evaluate the model).}
 
 \item{\code{N}}{Number of replicates. Intended for use with PSA 
-(\code{modvars="random"}); use with \code{modvars="expected"}
+(\code{modvars="random"}); use with \code{modvars} = "expected"
 will be repetitive and uninformative.}
 
-\item{\code{by}}{One of {"path", "strategy"}. If "path", the table has one row
-per path walked per strategy, per run, and includes the label of the
-terminating leaf node to identify each path. if "strategy" (the default),
-the table is aggregated by strategy, i.e. there is one row per strategy,
-per run and there is no "Leaf" column.}
+\item{\code{by}}{One of {"path", "strategy", "run"}. If "path", the table has
+one row per path walked per strategy, per run, and includes the label of
+the terminating leaf node to identify each path. If "strategy" (the 
+default), the table is aggregated by strategy, i.e. there is one row per
+strategy per run. If "run", the table has one row per run and uses
+concatenated strategy names and one (cost, benefit, utility, QALY) column
+for each strategy.}
 }
 \if{html}{\out{</div>}}
 }
-\subsection{Returns}{
-A data frame with one row per strategy per run and columns
-organized as follows:
+\subsection{Details}{
+The columns of the returned data frame are:
 \describe{
-  \item{Leaf}{The label of the leaf that terminates the path, 
-  for by='path'.}
-  \item{Strategy}{The strategy expressed as the values of the action 
-  edges emanating from each decision node.}
-  \item{Run}{The run number}
-  \item{Probability}{Probability (1 if by='strategy')}
-  \item{Cost}{Aggregate cost of the strategy.}
-  \item{Benefit}{Aggregate benefit of the strategy.}
-  \item{Utility}{Aggregate utility of the strategy.}
-  \item{QALY}{Aggregate QALY of the strategy.}
+\item{\code{by="path"}}{
+  \describe{
+    \item{}{}
+    \item{\code{Leaf}}{The label of terminating leaf node}
+    \item{\code{<label of first decision node>}}{label of action leaving 
+          the node}
+    \item{\code{<label of second decision node (etc.)>}}{label of action}
+    \item{\code{Probability}}{Probability of traversing the path}
+    \item{\code{Cost}}{Cost of traversing the path}
+    \item{\code{Benefit}}{Benefit of traversing the path}
+    \item{\code{Utility}}{Utility of traversing the path}
+    \item{\code{QALY}}{QALY of traversing the path}
+    \item{\code{Run}}{Run number}
+  }
 }
+
+\item{\code{by="strategy"}}{
+  \describe{
+    \item{}{}
+    \item{\code{<label of first decision node>}}{label of action leaving 
+          the node}
+    \item{\code{<label of second decision node (etc)}}{label of action}
+    \item{\code{Run}}{Run number}
+    \item{\code{Probability}}{\eqn{\Sigma p_i} for the run (1)}
+    \item{\code{Cost}}{Aggregate cost of the strategy}
+    \item{\code{Benefit}}{Aggregate benefit of the strategy}
+    \item{\code{Utility}}{Aggregate utility of the strategy}
+    \item{\code{QALY}}{Aggregate QALY of the strategy}
+  }
+} 
+
+\item{\code{by="run"}}{
+  \describe{
+    \item{}{}
+    \item{\code{Run}}{Run number}
+    \item{\code{Probability.<S>}}{Probability for strategy S}
+    \item{\code{Cost.<S>}}{Cost for strategy S}
+    \item{\code{Benefit.<S>}}{Benefit for strategy S}
+    \item{\code{Utility.<S>}}{Benefit for strategy S}
+    \item{\code{QALY.<S>}}{QALY for strategy S}
+  }
+  where <S> is string composed of the action labels in strategy \code{S}
+  concatenated with an underscore and there will be one probability etc.,
+  column for each strategy.
+  }
+}
+}
+
+\subsection{Returns}{
+A data frame whose columns depend on \code{by}; see "Details".
 }
 }
 \if{html}{\out{<hr>}}
@@ -475,7 +519,13 @@ Create a "tornado" diagram to compare two strategies for traversing
 the decision tree. A strategy is a unanimous prescription of the actions
 at each decision node.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DecisionTree$tornado(index, ref, outcome = "cost", exclude = NULL, draw = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{DecisionTree$tornado(
+  index,
+  ref,
+  outcome = "saving",
+  exclude = NULL,
+  draw = TRUE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -486,11 +536,11 @@ at each decision node.
 \item{\code{ref}}{The reference strategy (option) with which the index strategy
 will be compared.}
 
-\item{\code{outcome}}{One of \verb{"cost"} or \verb{"ICER"}. For \verb{"cost"}
-(e.g. in cost
-consequence analysis), the x axis is cost saved (cost of reference minus
+\item{\code{outcome}}{One of \code{"saving"} or \code{"ICER"}. For 
+\code{"saving"} (e.g. in cost consequence analysis), the x axis is cost
+saved (cost of reference minus
 cost of index), on the presumption that the new technology will be cost
-saving at the point estimate. For \verb{"ICER"} the x axis is
+saving at the point estimate. For \code{"ICER"} the x axis is
 \eqn{\Delta C/\Delta E} and is expected to be positive at the point 
 estimate (i.e. in the NE or SW quadrants of the cost-effectiveness 
 plane), where \eqn{\Delta C} is cost of index minus cost of reference, 
@@ -515,7 +565,80 @@ variable. This ensures that the range of each input is defensible
 A data frame with one row per input model variable and columns
 for: minimum value of the variable, maximum value of the variable,
 minimum value of the outcome and maximum value of the outcome. NULL
-if there are no \verb{ModVar}s.
+if there are no \code{ModVar}s.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-threshold"></a>}}
+\if{latex}{\out{\hypertarget{method-threshold}{}}}
+\subsection{Method \code{threshold()}}{
+Find the threshold value of a model variable at which
+the cost difference is zero or the ICER is equal to a threshold, for an
+index strategy compared with a reference strategy.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DecisionTree$threshold(
+  index,
+  ref,
+  outcome = "saving",
+  mvd,
+  a,
+  b,
+  tol,
+  lambda = NULL,
+  nmax = 1000
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{index}}{The index strategy (option) to be evaluated.}
+
+\item{\code{ref}}{The reference strategy (option) with which the index strategy
+will be compared.}
+
+\item{\code{outcome}}{One of \code{"saving"} or \code{"ICER"}. For 
+\code{"saving"} (e.g. in cost consequence analysis), the value of 
+\code{mvd}
+is found at which cost saved is zero (cost saved is cost of reference 
+minus cost of index, on the presumption that the new technology will be
+cost saving at the point estimate). For \code{"ICER"} the value of 
+\code{mvd} 
+is found for which the incremental cost effectiveness ratio (ICER) is 
+equal to the threshold \code{lambda}. ICER is calculated as 
+\eqn{\Delta C/\Delta E}, which will normally be positive
+at the point estimate (i.e. in the NE or SW quadrants of the 
+cost-effectiveness plane), where \eqn{\Delta C} is cost of index minus
+cost of reference and \eqn{\Delta E} is utility of index minus utility 
+of reference.}
+
+\item{\code{mvd}}{The description of the model variable for which the threshold
+is to be found.}
+
+\item{\code{a}}{The lower bound of the range of values of \code{mvd} to search 
+for the root (numeric).}
+
+\item{\code{b}}{The upper bound of the range of values of \code{mvd} to search
+for the root (numeric).}
+
+\item{\code{tol}}{The tolerance to which the threshold should be 
+calculated (numeric).}
+
+\item{\code{lambda}}{The ICER threshold (threshold ratio) for outcome="ICER".}
+
+\item{\code{nmax}}{Maximum number if iterations allowed to reach convergence.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Uses a rudimentary bisection method method to find the root.
+In PSA terms, the algorithm finds the value of the specified model
+variable for which 50\% of runs are cost saving (or above the ICER
+threshold) and 50\% are cost incurring (below the ICER threshold).
+}
+
+\subsection{Returns}{
+Value of the model variable of interest at the threshold.
 }
 }
 \if{html}{\out{<hr>}}

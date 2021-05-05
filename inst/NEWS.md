@@ -1,3 +1,17 @@
+
+# rdecision 1.0.4
+
+* Added option `value` to method `set` in class `ModVar`. This allows
+  variables to be set to an explicit value; used in threshold finding.
+* Added `threshold` function to `DecisionTree` to calculate the value of a 
+  model variable at which the cost difference becomes zero or ICER crosses
+  a threshold.
+* Added option `run` to `by` argument of `DecisionTree$evaluate()`. Avoids
+  application having to `reshape` output before reporting PSA results.
+* Fixed bug in method `DecisionTree$tornado` which caused bars to be clipped 
+  under some circumstances.
+* Minor revisions to the Tegaderm vignette.
+
 # rdecision 1.0.3
 
 * Package tests that involve sampling randomly from a distribution and
@@ -7,7 +21,7 @@
   mean and SD.
 * Added common test helpers and bespoke expectations to `testthat/setup.R`.
 * Changed vignette titles to reflect what kind of problem they illustrate,
-  rather than the problems themselves, to makes it clearer on the CRAN page.
+  rather than the problems themselves, to make it clearer on the CRAN page.
 * Added method `as_DOT` to `Graph` and `Digraph` for export to graphviz DOT
   file format to aid visualization of graphs.
 

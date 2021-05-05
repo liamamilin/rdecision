@@ -10,34 +10,22 @@ library("rlang")
 library("pander")
 
 ## ----variables, echo=T--------------------------------------------------------
-# standard normals
-n1 <- NormModVar$new("SN1","", 0, 1)
-n2 <- NormModVar$new("SN2","", 0, 1)
-n3 <- NormModVar$new("SN3","", 0, 1)
-  
 # clinical variables
 r.CRBSI <- NormModVar$new(
   'Baseline CRBSI rate', '/1000 catheter days', mu=1.48, sigma=0.074
 )
-hr.CRBSI <- ExprModVar$new(
-  "Tegaderm CRBSI HR", 
-  "HR", 
-  rlang::quo(exp(-0.911-0.393*n1))
+hr.CRBSI <- LogNormModVar$new(
+  "Tegaderm CRBSI HR", "HR", p1 = -0.911, p2 = 0.393
 )
-hr.LSI <- ExprModVar$new(
-  "Tegaderm LSI HR", 
-  "HR", 
-  rlang::quo(exp(-0.911-0.393*n2))
+hr.LSI <- LogNormModVar$new(
+  "Tegaderm LSI HR", "HR", p1 = -0.911, p2 = 0.393
 )
 r.Dermatitis <- NormModVar$new(
   'Baseline dermatitis risk', '/catheter', mu=0.0026, sigma=0.00026
 )
-rr.Dermatitis <- ExprModVar$new(
-  "Tegaderm LSI HR", 
-  "HR", 
-  rlang::quo(exp(1.482-0.490*n3))
+rr.Dermatitis <- LogNormModVar$new(
+  "Tegaderm Dermatitis RR", "RR", p1=1.482, p2=0.490
 )
-
 # cost variables
 c.CRBSI <- GammaModVar$new(
   'CRBSI cost', 'GBP', shape=198.0, scale=50
@@ -240,19 +228,18 @@ f2c <- "Tornado diagram for the Tegaderm model"
 
 ## ----tornado,echo=FALSE,results="hide",fig.keep="last",fig.align="center",fig.cap=f2c----
 DT$tornado(
-  index=list(e10), ref=list(e9), exclude=list("SN1","SN2","SN3"), draw=TRUE
+  index=list(e10), ref=list(e9), draw=TRUE
 )
 
 ## ----PSA, echo=TRUE-----------------------------------------------------------
 N <- 1000
-PSA <- DT$evaluate(setvars="random", N=N)
+PSA <- DT$evaluate(setvars="random", by="run", N=N)
 
 ## ----PSA_table, echo=FALSE----------------------------------------------------
-RES <- reshape(PSA, idvar="Run", timevar="d1", direction="wide")
-RES$Difference <- RES$Cost.Tegaderm - RES$Cost.Standard
+PSA$Difference <- PSA$Cost.Tegaderm - PSA$Cost.Standard
 keep<- c("Run", "Cost.Tegaderm", "Cost.Standard", "Difference")
-pander::pander(head(RES[,keep], n=10), round=2, row.names=F, justify="lrrr")
+pander::pander(head(PSA[,keep], n=10), round=2, row.names=F, justify="lrrr")
 
 ## ----echo=F-------------------------------------------------------------------
-rm(RES)
+rm(PSA)
 
