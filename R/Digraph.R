@@ -1,11 +1,9 @@
-#' @title \verb{Digraph} class
+#' @title A directed graph
 #' 
-#' @description
-#' An R6 class to represent a digraph (a directed graph).
+#' @description An R6 class representing a digraph (a directed graph).
 #' 
-#' @details 
-#' Encapsulates and provides methods for computation and checking of directed
-#' graphs (digraphs). Inherits from class \code{Graph}. 
+#' @details Encapsulates and provides methods for computation and checking of 
+#' directed graphs (digraphs). Inherits from class \code{Graph}. 
 #'
 #' @references{ 
 #'   Gansner ER, Koutsofios E, North SC, Vo K-P. A technique for drawing
@@ -60,13 +58,11 @@ Digraph <- R6::R6Class(
       return(invisible(self))
     },
 
-    #' @description 
-    #' Compute the adjacency matrix for the digraph. Each cell contains the
-    #' number of edges from the row vertex to the column vertex, with the 
-    #' convention of self loops being counted once, unless \code{boolean} is 
-    #' \code{TRUE}
-    #' when cells are either \code{FALSE} (not adjacent) or \code{TRUE} 
-    #' (adjacent).
+    #' @description Compute the adjacency matrix for the digraph.
+    #' @details Each cell contains the number of edges from the row vertex to
+    #' the column vertex, with the convention of self loops being counted once,
+    #' unless \code{boolean} is \code{TRUE} when cells are either \code{FALSE}
+    #' (not adjacent) or \code{TRUE} (adjacent).
     #' @param boolean If \code{TRUE}, the adjacency matrix is logical, each 
     #' cell is \code{{FALSE,TRUE}}.
     #' @return A square numeric matrix with the number of rows and columns
@@ -114,12 +110,12 @@ Digraph <- R6::R6Class(
       return(A)
     },
     
-    #' @description 
-    #' Compute the incidence matrix for the graph. Each row is a vertex and
-    #' each column is an edge. Edges leaving a vertex have value -1 and edges
-    #' entering have value +1. if all vertexes have defined and unique labels
-    #' and all edges have defined and unique labels, the dimnames of the matrix
-    #' are the labels of the vertexes and edges.
+    #' @description Compute the incidence matrix for the digraph. 
+    #' @details Each row is a vertex and each column is an edge. Edges leaving
+    #' a vertex have value -1 and edges entering have value +1. By convention
+    #' self loops have value 0 (1-1). If all vertexes have defined and unique 
+    #' labels and all edges have defined and unique labels, the dimnames of the
+    #' matrix are the labels of the vertexes and edges.
     #' @return The incidence matrix.
     digraph_incidence_matrix = function() {
       # create, if NULL
@@ -147,8 +143,14 @@ Digraph <- R6::R6Class(
           s <- self$vertex_index(e$source())
           t <- self$vertex_index(e$target())
           ei <- self$edge_index(e)
-          B[s,ei] <- -1
-          B[t,ei] <- 1
+          if (s==t) {
+            # self loop
+            B[s,ei] <- 0
+          } else {
+            # not self loop
+            B[s,ei] <- -1
+            B[t,ei] <- 1
+          }
         }
         # save it
         private$BD <- B
@@ -160,9 +162,8 @@ Digraph <- R6::R6Class(
       return(B)
     },
     
-    #' @description 
-    #' Attempt to topologically sort the vertexes in the directed graph using
-    #' Kahn's algorithm (Kahn, 1962).
+    #' @description Topologically sort the vertexes in the digraph.
+    #' @details Uses Kahn's algorithm (Kahn, 1962).
     #' @return A list of vertexes, topologically sorted. If the digraph has
     #' cycles, the returned ordered list will not contain all the vertexes
     #' in the graph, but no error will be raised.
@@ -199,11 +200,10 @@ Digraph <- R6::R6Class(
       return(LL)
     },
 
-    #' @description 
-    #' Test whether the graph is connected. For digraphs this will
-    #' always return \code{FALSE} because \dfn{connected} is not defined. 
-    #' Function \code{weakly_connected} calculates whether the underlying
-    #' graph is connected.
+    #' @description Test whether the graph is connected.
+    #' @details For digraphs this will always return \code{FALSE} because
+    #' \dfn{connected} is not defined. Function \code{weakly_connected} 
+    #' calculates whether the underlying graph is connected.
     #' @return \code{TRUE} if connected, \code{FALSE} if not.
     is_connected = function() {
       return(FALSE)
@@ -218,38 +218,37 @@ Digraph <- R6::R6Class(
       return(connected)
     },
 
-    #' @description 
-    #' Checks for the presence of a cycle in the graph by attempting to do 
-    #' a topological sort. If the sort does not contain all vertexes, the
-    #' digraph contains at least one cycle.
-    #' This method overrides 'is_acyclic' in Graph.
+    #' @description Checks for the presence of a cycle in the graph.
+    #' @details Attempts to do a topological sort. If the sort does not contain
+    #' all vertexes, the digraph contains at least one cycle. This method 
+    #' overrides \code{is_acyclic} in \code{Graph}.
     #' @return \code{TRUE} if no cycles detected.
     is_acyclic = function() {
       L <- self$topological_sort()
       return(length(L)==length(private$V))
     },    
 
-    #' @description 
-    #' Compute whether the digraph's underlying graph is a tree (connected and
-    #' acyclic).
+    #' @description Is the digraph's underlying graph a tree?
+    #' @details It is a tree if it is connected and acyclic.
     #' @return \code{TRUE} if the underlying graph is a tree; \code{FALSE} 
     #' if not.
     is_tree = function() {
       return(self$is_weakly_connected() && super$is_acyclic())
     },
     
-    #' @description 
-    #' Compute whether the digraph's underlying graph is a tree (connected and
-    #' acyclic). 
+    #' @description Is the digraph's underlying graph a polytree?
+    #' @details It is a polytree if it is directed, connected and acyclic.
+    #' Because the object is a digraph (directed), this is synonymous with
+    #' \code{tree}.
     #' @return \code{TRUE} if the underlying graph is a tree; \code{FALSE}
     #' if not.
     is_polytree = function() {
       return(self$is_tree())
     },
 
-    #' @description    
-    #' Check whether the digraph is an arborescence (a tree with a
-    #' single root and unique paths from the root).
+    #' @description Is the digraph an arborescence?
+    #' @details An \dfn{arborescence} is a tree with a single root and unique
+    #' paths from the root.
     #' @return \code{TRUE} if the digraph is an arborescence; \code{FALSE}
     #' if not.
     is_arborescence = function() {
@@ -271,8 +270,7 @@ Digraph <- R6::R6Class(
       return(TRUE)
     },
 
-    #' @description
-    #' Find the direct successors of a node. 
+    #' @description Find the direct successors of a node. 
     #' @param v The index vertex.
     #' @return A list of nodes or an empty list if the specified
     #' node has no successors.
@@ -289,8 +287,7 @@ Digraph <- R6::R6Class(
       return(successors)
     },
       
-    #' @description
-    #' Find the direct predecessors of a node. 
+    #' @description Find the direct predecessors of a node. 
     #' @param v The index vertex.
     #' @return A list of nodes or an empty list if the specified
     #' node has no predecessors.
@@ -307,10 +304,9 @@ Digraph <- R6::R6Class(
       return(pred)
     },
 
-    #' @description 
-    #' Find all directed simple paths from source node \code{s} to target node
-    #' \code{t}. In "simple" paths all vertexes are unique.
-    #' Uses a recursive depth-first search algorithm.
+    #' @description Find all directed simple paths from source to target.
+    #' @details In simple paths all vertexes are unique. Uses a recursive 
+    #' depth-first search algorithm.
     #' @param s Source node.
     #' @param t Target node.
     #' @return A list of ordered node lists. 
@@ -355,9 +351,7 @@ Digraph <- R6::R6Class(
       return(VPL)
     },
     
-    #' @description 
-    #' Construct the sequence of edges which joins the specified
-    #' sequence of vertexes in this graph.
+    #' @description Sequence of edges which join the specified path.
     #' @param P A list of Nodes
     #' @return A list of Edges
     walk = function(P) {
@@ -400,10 +394,11 @@ Digraph <- R6::R6Class(
       return(E)
     },
     
-    #' @description Writes a representation of the digraph in the 
-    #' \code{graphviz} DOT language
+    #' @description Exports the digraph in DOT notation.
+    #' @details Writes a representation of the digraph in the 
+    #' \code{graphviz} DOT language 
     #' (\url{http://graphviz.org/doc/info/lang.html}) for drawing with one
-    #' of the \code{graphviz} tools including \code{dot} (Gansner, 1993). 
+    #' of the \code{graphviz} tools, including \code{dot} (Gansner, 1993). 
     #' @return A character vector. Intended for passing to \code{writeLines}
     #' for saving as a text file.
     as_DOT = function() {

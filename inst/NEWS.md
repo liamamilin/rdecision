@@ -1,4 +1,31 @@
 
+# rdecision 1.1.0
+
+* Added data/BriggsEx47, as example 4.7 from Briggs et al to /data.
+* Added elementary semi-Markov model vignette (Chancellor).
+* Added narrative to `SemitMarkovModel` as caution for converting between 
+  transition rates and per-cycle probabilities. Cited work of Jones et al
+  (2017) and Welton (2005) which motivated the approach taken.
+* Added `set_probabilities` method to `SemiMarkovModel` to set transition 
+  probabilities from a matrix. 
+* Added multivariate `DirichletDistribution` class, mainly to support
+  PSA in semi-Markov models.
+* Refactored model variable classes into much smaller convenience classes
+  with an underlying distribution. For example `BetaModVar` has a
+  `BetaDistribution` uncertainty.
+* Refactored `ModVar` with a "has-a" relationship to an underlying uncertainty
+  distribution. Incorporated ability to link several model variables to a 
+  common underlying distribution (for use with multinomial Dirichlet etc.).
+* Added distribution class `DiracDistribution`. 
+* Added subclasses of `Distribution` for each of the currently
+  supported distributions (Beta, Normal, Log Normal, Gamma).
+* Added base class `Distribution` to represent multivariate distributions.
+* Added single/combined therapy HIV vignette.
+* Added class `SemitMarkovModel` and its test script.
+* Added class `Transition` (inherits from `Node`) and its test script.
+* Added class `MarkovState` (inherits from `Edge`) and its test script.
+* Self loops in digraphs have a value of zero in the incidence matrix.
+
 # rdecision 1.0.4
 
 * Added option `value` to method `set` in class `ModVar`. This allows

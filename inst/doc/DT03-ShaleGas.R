@@ -59,7 +59,7 @@ library(rdecision)
 ## ----fig1c, echo=FALSE--------------------------------------------------------
 f1c <- "Decision tree used in the shale gas problem"
 
-## ----draw,echo=FALSE,results="hide",fig.keep="last",fig.align="center",fig.cap=f1c----
+## ----draw,echo=FALSE,results="hide",fig.keep="all",fig.align="center",fig.cap=f1c----
 DT$draw(border=TRUE)
 
 ## ----evaluate, echo=TRUE------------------------------------------------------

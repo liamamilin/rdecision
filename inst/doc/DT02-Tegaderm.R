@@ -196,7 +196,7 @@ DT <- DecisionTree$new(V,E)
 ## ----fig1.caption, echo=FALSE-------------------------------------------------
 f1c <- "Decision tree for the Tegaderm model"
 
-## ----draw,echo=FALSE,results="hide",fig.keep="last",fig.align="center",fig.cap=f1c----
+## ----draw,echo=FALSE,results="hide",fig.keep="all",fig.align="center",fig.cap=f1c----
 DT$draw(border=TRUE)
 
 ## ----modelinputs-structure, echo=FALSE----------------------------------------
@@ -226,7 +226,7 @@ local({
 ## ----fig2.caption, echo=FALSE-------------------------------------------------
 f2c <- "Tornado diagram for the Tegaderm model"
 
-## ----tornado,echo=FALSE,results="hide",fig.keep="last",fig.align="center",fig.cap=f2c----
+## ----tornado,echo=FALSE,results="hide",fig.keep="all",fig.align="center",fig.cap=f2c----
 DT$tornado(
   index=list(e10), ref=list(e9), draw=TRUE
 )

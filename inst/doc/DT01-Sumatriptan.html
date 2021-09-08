@@ -15,6 +15,7 @@
 
 <title>Elementary decision tree (Evans 1997)</title>
 
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -35,41 +36,69 @@
   }
 </style>
 <style type="text/css" data-origin="pandoc">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 
 </style>
 <script>
@@ -96,8 +125,30 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
-<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
 
 
 
@@ -118,87 +169,93 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>This vignette is an example of modelling a decision tree using the <code>rdecision</code> package. It is based on the example given by Briggs<span class="citation"><sup>1</sup></span> (Box 2.3) which itself is based on a decision tree which compared oral Sumatriptan versus oral caffeine/Ergotamine for migraine<span class="citation"><sup>2</sup></span>.</p>
+<p>This vignette is an example of modelling a decision tree using the <code>rdecision</code> package. It is based on the example given by Briggs<span class="citation"><sup>1</sup></span> (Box 2.3) which itself is based on a decision tree which compared oral Sumatriptan versus oral caffeine/Ergotamine for migraine.<span class="citation"><sup>2</sup></span></p>
 </div>
 <div id="creating-the-model" class="section level1">
 <h1>Creating the model</h1>
 <div id="constructing-the-tree" class="section level2">
 <h2>Constructing the tree</h2>
 <p>The following code constructs the decision tree. In the formulation used by <code>rdecision</code>, a decision tree is a form of <em>arborescence</em>, a directed graph of nodes and edges, with a single root and a unique path from the root to each leaf node. Decision trees comprise three types of node: decision, chance and leaf nodes and two types of edge: actions (whose sources are decision nodes) and reactions (whose sources are chance nodes), <a href="#tree-diagram">see figure</a>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Time horizon</span>
-th &lt;-<span class="st"> </span><span class="kw">as.difftime</span>(<span class="dv">48</span>, <span class="dt">units=</span><span class="st">&quot;hours&quot;</span>)
-
-<span class="co"># model variables for cost</span>
-c.sumatriptan &lt;-<span class="st"> </span><span class="fl">16.10</span>
-c.caffeine &lt;-<span class="st"> </span><span class="fl">1.32</span>
-c.ED &lt;-<span class="st"> </span><span class="fl">63.16</span>
-c.admission &lt;-<span class="st"> </span><span class="dv">1093</span>
-
-<span class="co"># Sumatriptan branch</span>
-ta &lt;-<span class="st"> </span>LeafNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;A&quot;</span>, <span class="dt">utility=</span><span class="fl">1.0</span>, <span class="dt">interval=</span>th)
-tb &lt;-<span class="st"> </span>LeafNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;B&quot;</span>, <span class="dt">utility=</span><span class="fl">0.9</span>, <span class="dt">interval=</span>th)
-c3 &lt;-<span class="st"> </span>ChanceNode<span class="op">$</span><span class="kw">new</span>()
-e1 &lt;-<span class="st"> </span>Reaction<span class="op">$</span><span class="kw">new</span>(c3, ta, <span class="dt">p=</span><span class="fl">0.594</span>, <span class="dt">label=</span><span class="st">&quot;No recurrence&quot;</span>)
-e2 &lt;-<span class="st"> </span>Reaction<span class="op">$</span><span class="kw">new</span>(c3, tb, <span class="dt">p=</span><span class="fl">0.406</span>, <span class="dt">cost=</span>c.sumatriptan, 
-                   <span class="dt">label=</span><span class="st">&quot;Relieved 2nd dose&quot;</span>)
-
-td &lt;-<span class="st"> </span>LeafNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;D&quot;</span>, <span class="dt">utility=</span><span class="fl">0.1</span>, <span class="dt">interval=</span>th)
-te &lt;-<span class="st"> </span>LeafNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;E&quot;</span>, <span class="dt">utility=</span><span class="op">-</span><span class="fl">0.3</span>, <span class="dt">interval=</span>th)
-c7 &lt;-<span class="st"> </span>ChanceNode<span class="op">$</span><span class="kw">new</span>()
-e3 &lt;-<span class="st"> </span>Reaction<span class="op">$</span><span class="kw">new</span>(c7, td, <span class="dt">p=</span><span class="fl">0.998</span>, <span class="dt">label=</span><span class="st">&quot;Relief&quot;</span>)
-e4 &lt;-<span class="st"> </span>Reaction<span class="op">$</span><span class="kw">new</span>(c7, te, <span class="dt">p=</span><span class="fl">0.002</span>, <span class="dt">cost=</span>c.admission, <span class="dt">label=</span><span class="st">&quot;Hospitalization&quot;</span>)
-
-tc &lt;-<span class="st"> </span>LeafNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;C&quot;</span>, <span class="dt">utility=</span><span class="op">-</span><span class="fl">0.3</span>, <span class="dt">interval=</span>th)
-c4 &lt;-<span class="st"> </span>ChanceNode<span class="op">$</span><span class="kw">new</span>()
-e5 &lt;-<span class="st"> </span>Reaction<span class="op">$</span><span class="kw">new</span>(c4, tc, <span class="dt">p=</span><span class="fl">0.920</span>, <span class="dt">label=</span><span class="st">&quot;Endures attack&quot;</span>)
-e6 &lt;-<span class="st"> </span>Reaction<span class="op">$</span><span class="kw">new</span>(c4, c7, <span class="dt">p=</span><span class="fl">0.080</span>, <span class="dt">cost=</span>c.ED, <span class="dt">label=</span><span class="st">&quot;ED&quot;</span>)
-
-c1 &lt;-<span class="st"> </span>ChanceNode<span class="op">$</span><span class="kw">new</span>()
-e7 &lt;-<span class="st"> </span>Reaction<span class="op">$</span><span class="kw">new</span>(c1, c3, <span class="dt">p=</span><span class="fl">0.558</span>, <span class="dt">label=</span><span class="st">&quot;Relief&quot;</span>)
-e8 &lt;-<span class="st"> </span>Reaction<span class="op">$</span><span class="kw">new</span>(c1, c4, <span class="dt">p=</span><span class="fl">0.442</span>, <span class="dt">label=</span><span class="st">&quot;No relief&quot;</span>)
-
-<span class="co"># Caffeine/Ergotamine branch</span>
-tf &lt;-<span class="st"> </span>LeafNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;F&quot;</span>, <span class="dt">utility=</span><span class="fl">1.0</span>, <span class="dt">interval=</span>th)
-tg &lt;-<span class="st"> </span>LeafNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;G&quot;</span>, <span class="dt">utility=</span><span class="fl">0.9</span>, <span class="dt">interval=</span>th)
-c5 &lt;-<span class="st"> </span>ChanceNode<span class="op">$</span><span class="kw">new</span>()
-e9 &lt;-<span class="st"> </span>Reaction<span class="op">$</span><span class="kw">new</span>(c5, tf, <span class="dt">p=</span><span class="fl">0.703</span>, <span class="dt">label=</span><span class="st">&quot;No recurrence&quot;</span>)
-e10 &lt;-<span class="st"> </span>Reaction<span class="op">$</span><span class="kw">new</span>(c5, tg, <span class="dt">p=</span><span class="fl">0.297</span>, <span class="dt">cost=</span>c.caffeine, 
-                    <span class="dt">label=</span><span class="st">&quot;Relieved 2nd dose&quot;</span>)
-
-ti &lt;-<span class="st"> </span>LeafNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;I&quot;</span>, <span class="dt">utility=</span><span class="fl">0.1</span>, <span class="dt">interval=</span>th)
-tj &lt;-<span class="st"> </span>LeafNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;J&quot;</span>, <span class="dt">utility=</span><span class="op">-</span><span class="fl">0.3</span>, <span class="dt">interval=</span>th)
-c8 &lt;-<span class="st"> </span>ChanceNode<span class="op">$</span><span class="kw">new</span>()
-e11 &lt;-<span class="st"> </span>Reaction<span class="op">$</span><span class="kw">new</span>(c8, ti, <span class="dt">p=</span><span class="fl">0.998</span>, <span class="dt">label=</span><span class="st">&quot;Relief&quot;</span>)
-e12 &lt;-<span class="st"> </span>Reaction<span class="op">$</span><span class="kw">new</span>(c8, tj, <span class="dt">p=</span><span class="fl">0.002</span>, <span class="dt">cost=</span>c.admission, <span class="dt">label=</span><span class="st">&quot;Hospitalization&quot;</span>)
- 
-th &lt;-<span class="st"> </span>LeafNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;H&quot;</span>, <span class="dt">utility=</span><span class="op">-</span><span class="fl">0.3</span>, <span class="dt">interval=</span>th)
-c6 &lt;-<span class="st"> </span>ChanceNode<span class="op">$</span><span class="kw">new</span>()
-e13 &lt;-<span class="st"> </span>Reaction<span class="op">$</span><span class="kw">new</span>(c6, th, <span class="dt">p=</span><span class="fl">0.920</span>, <span class="dt">label=</span><span class="st">&quot;Endures attack&quot;</span>)
-e14 &lt;-<span class="st"> </span>Reaction<span class="op">$</span><span class="kw">new</span>(c6, c8, <span class="dt">p=</span><span class="fl">0.080</span>, <span class="dt">cost=</span>c.ED, <span class="dt">label=</span><span class="st">&quot;ED&quot;</span>)
-
-c2 &lt;-<span class="st"> </span>ChanceNode<span class="op">$</span><span class="kw">new</span>()
-e15 &lt;-<span class="st"> </span>Reaction<span class="op">$</span><span class="kw">new</span>(c2, c5, <span class="dt">p=</span><span class="fl">0.379</span>, <span class="dt">label=</span><span class="st">&quot;Relief&quot;</span>)
-e16 &lt;-<span class="st"> </span>Reaction<span class="op">$</span><span class="kw">new</span>(c2, c6, <span class="dt">p=</span><span class="fl">0.621</span>, <span class="dt">label=</span><span class="st">&quot;No relief&quot;</span>)
-
-<span class="co"># decision node</span>
-d1 &lt;-<span class="st"> </span>DecisionNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;d1&quot;</span>)
-e17 &lt;-<span class="st"> </span>Action<span class="op">$</span><span class="kw">new</span>(d1, c1, <span class="dt">cost=</span>c.sumatriptan, <span class="dt">label=</span><span class="st">&quot;Sumatriptan&quot;</span>)
-e18 &lt;-<span class="st"> </span>Action<span class="op">$</span><span class="kw">new</span>(d1, c2, <span class="dt">cost=</span>c.caffeine, <span class="dt">label=</span><span class="st">&quot;Caffeine/Ergotamine&quot;</span>)
- 
-<span class="co"># create lists of nodes and edges</span>
-V &lt;-<span class="st"> </span><span class="kw">list</span>(
-  d1, c1, c2, c3, c4, c5, c6, c7, c8,
-  ta, tb, tc, td, te, tf, tg, th, ti, tj
-)
-E &lt;-<span class="st"> </span><span class="kw">list</span>(
-  e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12, e13, e14, e15, e16, 
-  e17, e18
-)
-<span class="co"># tree</span>
-DT &lt;-<span class="st"> </span>DecisionTree<span class="op">$</span><span class="kw">new</span>(V,E)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Time horizon</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>th <span class="ot">&lt;-</span> <span class="fu">as.difftime</span>(<span class="dv">48</span>, <span class="at">units=</span><span class="st">&quot;hours&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># model variables for cost</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>c.sumatriptan <span class="ot">&lt;-</span> <span class="fl">16.10</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>c.caffeine <span class="ot">&lt;-</span> <span class="fl">1.32</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>c.ED <span class="ot">&lt;-</span> <span class="fl">63.16</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>c.admission <span class="ot">&lt;-</span> <span class="dv">1093</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Sumatriptan branch</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>ta <span class="ot">&lt;-</span> LeafNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;A&quot;</span>, <span class="at">utility=</span><span class="fl">1.0</span>, <span class="at">interval=</span>th)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> LeafNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;B&quot;</span>, <span class="at">utility=</span><span class="fl">0.9</span>, <span class="at">interval=</span>th)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>c3 <span class="ot">&lt;-</span> ChanceNode<span class="sc">$</span><span class="fu">new</span>()</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>e1 <span class="ot">&lt;-</span> Reaction<span class="sc">$</span><span class="fu">new</span>(c3, ta, <span class="at">p=</span><span class="fl">0.594</span>, <span class="at">label=</span><span class="st">&quot;No recurrence&quot;</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>e2 <span class="ot">&lt;-</span> Reaction<span class="sc">$</span><span class="fu">new</span>(c3, tb, <span class="at">p=</span><span class="fl">0.406</span>, <span class="at">cost=</span>c.sumatriptan, </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>                   <span class="at">label=</span><span class="st">&quot;Relieved 2nd dose&quot;</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> LeafNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;D&quot;</span>, <span class="at">utility=</span><span class="fl">0.1</span>, <span class="at">interval=</span>th)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>te <span class="ot">&lt;-</span> LeafNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;E&quot;</span>, <span class="at">utility=</span><span class="sc">-</span><span class="fl">0.3</span>, <span class="at">interval=</span>th)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>c7 <span class="ot">&lt;-</span> ChanceNode<span class="sc">$</span><span class="fu">new</span>()</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>e3 <span class="ot">&lt;-</span> Reaction<span class="sc">$</span><span class="fu">new</span>(c7, td, <span class="at">p=</span><span class="fl">0.998</span>, <span class="at">label=</span><span class="st">&quot;Relief&quot;</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>e4 <span class="ot">&lt;-</span> Reaction<span class="sc">$</span><span class="fu">new</span>(c7, te, <span class="at">p=</span><span class="fl">0.002</span>, <span class="at">cost=</span>c.admission, <span class="at">label=</span><span class="st">&quot;Hospitalization&quot;</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>tc <span class="ot">&lt;-</span> LeafNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;C&quot;</span>, <span class="at">utility=</span><span class="sc">-</span><span class="fl">0.3</span>, <span class="at">interval=</span>th)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>c4 <span class="ot">&lt;-</span> ChanceNode<span class="sc">$</span><span class="fu">new</span>()</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>e5 <span class="ot">&lt;-</span> Reaction<span class="sc">$</span><span class="fu">new</span>(c4, tc, <span class="at">p=</span><span class="fl">0.920</span>, <span class="at">label=</span><span class="st">&quot;Endures attack&quot;</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>e6 <span class="ot">&lt;-</span> Reaction<span class="sc">$</span><span class="fu">new</span>(c4, c7, <span class="at">p=</span><span class="fl">0.080</span>, <span class="at">cost=</span>c.ED, <span class="at">label=</span><span class="st">&quot;ED&quot;</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>c1 <span class="ot">&lt;-</span> ChanceNode<span class="sc">$</span><span class="fu">new</span>()</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>e7 <span class="ot">&lt;-</span> Reaction<span class="sc">$</span><span class="fu">new</span>(c1, c3, <span class="at">p=</span><span class="fl">0.558</span>, <span class="at">label=</span><span class="st">&quot;Relief&quot;</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>e8 <span class="ot">&lt;-</span> Reaction<span class="sc">$</span><span class="fu">new</span>(c1, c4, <span class="at">p=</span><span class="fl">0.442</span>, <span class="at">label=</span><span class="st">&quot;No relief&quot;</span>)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Caffeine/Ergotamine branch</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>tf <span class="ot">&lt;-</span> LeafNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;F&quot;</span>, <span class="at">utility=</span><span class="fl">1.0</span>, <span class="at">interval=</span>th)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>tg <span class="ot">&lt;-</span> LeafNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;G&quot;</span>, <span class="at">utility=</span><span class="fl">0.9</span>, <span class="at">interval=</span>th)</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>c5 <span class="ot">&lt;-</span> ChanceNode<span class="sc">$</span><span class="fu">new</span>()</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>e9 <span class="ot">&lt;-</span> Reaction<span class="sc">$</span><span class="fu">new</span>(c5, tf, <span class="at">p=</span><span class="fl">0.703</span>, <span class="at">label=</span><span class="st">&quot;No recurrence&quot;</span>)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>e10 <span class="ot">&lt;-</span> Reaction<span class="sc">$</span><span class="fu">new</span>(c5, tg, <span class="at">p=</span><span class="fl">0.297</span>, <span class="at">cost=</span>c.caffeine, </span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>                    <span class="at">label=</span><span class="st">&quot;Relieved 2nd dose&quot;</span>)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>ti <span class="ot">&lt;-</span> LeafNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;I&quot;</span>, <span class="at">utility=</span><span class="fl">0.1</span>, <span class="at">interval=</span>th)</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>tj <span class="ot">&lt;-</span> LeafNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;J&quot;</span>, <span class="at">utility=</span><span class="sc">-</span><span class="fl">0.3</span>, <span class="at">interval=</span>th)</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>c8 <span class="ot">&lt;-</span> ChanceNode<span class="sc">$</span><span class="fu">new</span>()</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>e11 <span class="ot">&lt;-</span> Reaction<span class="sc">$</span><span class="fu">new</span>(c8, ti, <span class="at">p=</span><span class="fl">0.998</span>, <span class="at">label=</span><span class="st">&quot;Relief&quot;</span>)</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>e12 <span class="ot">&lt;-</span> Reaction<span class="sc">$</span><span class="fu">new</span>(c8, tj, <span class="at">p=</span><span class="fl">0.002</span>, <span class="at">cost=</span>c.admission, <span class="at">label=</span><span class="st">&quot;Hospitalization&quot;</span>)</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>th <span class="ot">&lt;-</span> LeafNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;H&quot;</span>, <span class="at">utility=</span><span class="sc">-</span><span class="fl">0.3</span>, <span class="at">interval=</span>th)</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>c6 <span class="ot">&lt;-</span> ChanceNode<span class="sc">$</span><span class="fu">new</span>()</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>e13 <span class="ot">&lt;-</span> Reaction<span class="sc">$</span><span class="fu">new</span>(c6, th, <span class="at">p=</span><span class="fl">0.920</span>, <span class="at">label=</span><span class="st">&quot;Endures attack&quot;</span>)</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>e14 <span class="ot">&lt;-</span> Reaction<span class="sc">$</span><span class="fu">new</span>(c6, c8, <span class="at">p=</span><span class="fl">0.080</span>, <span class="at">cost=</span>c.ED, <span class="at">label=</span><span class="st">&quot;ED&quot;</span>)</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>c2 <span class="ot">&lt;-</span> ChanceNode<span class="sc">$</span><span class="fu">new</span>()</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>e15 <span class="ot">&lt;-</span> Reaction<span class="sc">$</span><span class="fu">new</span>(c2, c5, <span class="at">p=</span><span class="fl">0.379</span>, <span class="at">label=</span><span class="st">&quot;Relief&quot;</span>)</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>e16 <span class="ot">&lt;-</span> Reaction<span class="sc">$</span><span class="fu">new</span>(c2, c6, <span class="at">p=</span><span class="fl">0.621</span>, <span class="at">label=</span><span class="st">&quot;No relief&quot;</span>)</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="co"># decision node</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> DecisionNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;d1&quot;</span>)</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>e17 <span class="ot">&lt;-</span> Action<span class="sc">$</span><span class="fu">new</span>(d1, c1, <span class="at">cost=</span>c.sumatriptan, <span class="at">label=</span><span class="st">&quot;Sumatriptan&quot;</span>)</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>e18 <span class="ot">&lt;-</span> Action<span class="sc">$</span><span class="fu">new</span>(d1, c2, <span class="at">cost=</span>c.caffeine, <span class="at">label=</span><span class="st">&quot;Caffeine/Ergotamine&quot;</span>)</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="co"># create lists of nodes and edges</span></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>  d1, c1, c2, c3, c4, c5, c6, c7, c8,</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>  ta, tb, tc, td, te, tf, tg, th, ti, tj</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>  e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12, e13, e14, e15, e16, </span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>  e17, e18</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="co"># tree</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>DT <span class="ot">&lt;-</span> DecisionTree<span class="sc">$</span><span class="fu">new</span>(V,E)</span></code></pre></div>
 </div>
 <div id="tree-diagram" class="section level2">
 <h2>Tree diagram</h2>
+<div class="figure" style="text-align: center">
+<img src="data:image/png;base64,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" alt="Decision tree for the Sumatriptan model" />
+<p class="caption">
+Decision tree for the Sumatriptan model
+</p>
+</div>
 </div>
 </div>
 <div id="running-the-model" class="section level1">
@@ -303,7 +360,7 @@ DT &lt;-<span class="st"> </span>DecisionTree<span class="op">$</span><span clas
 </tr>
 </tbody>
 </table>
-<p>There are, as expected, ten pathways (5 per strategy). The expected cost, utility and QALY (utility multiplied by the time horizon of the model) for each choice can be calculated from the table above, or by invoking the <code>evaluate</code> method of a decision tree object with the default parameter <code>by=&quot;strategy&quot;</code>. This gives the following result, consistent with that reported by Evans <em>et al</em><span class="citation"><sup>2</sup></span>.</p>
+<p>There are, as expected, ten pathways (5 per strategy). The expected cost, utility and QALY (utility multiplied by the time horizon of the model) for each choice can be calculated from the table above, or by invoking the <code>evaluate</code> method of a decision tree object with the default parameter <code>by=&quot;strategy&quot;</code>. This gives the following result, consistent with that reported by Evans <em>et al</em>.<span class="citation"><sup>2</sup></span></p>
 <table>
 <thead>
 <tr class="header">
@@ -330,13 +387,13 @@ DT &lt;-<span class="st"> </span>DecisionTree<span class="op">$</span><span clas
 </table>
 </div>
 <div id="references" class="section level1 unnumbered">
-<h1>References</h1>
-<div id="refs" class="references">
-<div id="ref-briggs2006">
-<p>1 Briggs A, Claxton K, Sculpher M. <em>Decision modelling for health economic evaluation</em>. Oxford, UK: Oxford University Press; 2006.</p>
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-briggs2006" class="csl-entry">
+<div class="csl-left-margin">1 </div><div class="csl-right-inline">Briggs A, Claxton K, Sculpher M. <em>Decision modelling for health economic evaluation</em>. <span>Oxford, UK</span>: <span>Oxford University Press</span>; 2006.</div>
 </div>
-<div id="ref-evans1997">
-<p>2 Evans KW, Boan JA, Evans JL, Shuaib A. Economic evaluation of oral Sumatriptan compared with oral Caffeine/Ergotamine for migraine. <em>Pharmacoeconomics</em> 1997;<strong>12</strong>:565–77.</p>
+<div id="ref-evans1997" class="csl-entry">
+<div class="csl-left-margin">2 </div><div class="csl-right-inline">Evans KW, Boan JA, Evans JL, Shuaib A. Economic evaluation of oral <span>Sumatriptan</span> compared with oral <span>Caffeine</span>/<span>Ergotamine</span> for migraine. <em>Pharmacoeconomics</em> 1997;<strong>12</strong>:565–77.</div>
 </div>
 </div>
 </div>

@@ -15,6 +15,7 @@
 
 <title>Decision tree with three decision nodes (Kaminski 2018)</title>
 
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -35,41 +36,69 @@
   }
 </style>
 <style type="text/css" data-origin="pandoc">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 
 </style>
 <script>
@@ -96,8 +125,30 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
-<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
 
 
 
@@ -118,13 +169,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>Kaminski <em>et al</em><span class="citation"><sup>1</sup></span> (Fig 7) provide an example of a decision tree with multiple decision nodes, including some that are descendants of another decision node. This vignette illustrates how <code>rdecision</code> can be used to model a complex decision tree, using the example from Figure 7 of Kamiński <em>et al</em><span class="citation"><sup>1</sup></span>.</p>
+<p>Kaminski <em>et al</em><span class="citation"><sup>1</sup></span> (Fig 7) provide an example of a decision tree with multiple decision nodes, including some that are descendants of another decision node. This vignette illustrates how <code>rdecision</code> can be used to model a complex decision tree, using the example from Figure 7 of Kamiński <em>et al</em>.<span class="citation"><sup>1</sup></span></p>
 </div>
 <div id="the-problem" class="section level1">
 <h1>The problem</h1>
 <p>Kaminski <em>et al</em><span class="citation"><sup>1</sup></span> state the problem as follows:</p>
 <blockquote>
-<p>Consider an investor owning a plot of land, possibly (<em>a priori</em> probability amounting to 70%) hiding shale gas layers. The plot can be sold immediately (800, all prices in $'000). The investor can build a gas extraction unit for a cost of 300. If gas is found, the profit will amount to 2,500 (if not there will be no profit, and no possibility of selling the land). Geological tests can be performed for a cost of 50, and will produce either a positive or negative signal. The sensitivity amounts to 90% and the specificity amounts to 70%. The installation can be built after the test or the land may be sold for 1000 (600) after a positive (negative) test result.</p>
+<p>Consider an investor owning a plot of land, possibly (<em>a priori</em> probability amounting to 70%) hiding shale gas layers. The plot can be sold immediately (800, all prices in $’000). The investor can build a gas extraction unit for a cost of 300. If gas is found, the profit will amount to 2,500 (if not there will be no profit, and no possibility of selling the land). Geological tests can be performed for a cost of 50, and will produce either a positive or negative signal. The sensitivity amounts to 90% and the specificity amounts to 70%. The installation can be built after the test or the land may be sold for 1000 (600) after a positive (negative) test result.</p>
 </blockquote>
 </div>
 <div id="creating-the-model" class="section level1">
@@ -132,65 +183,71 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="constructing-the-tree" class="section level2">
 <h2>Constructing the tree</h2>
 <p>The model, comprising three decision nodes, four chance nodes, nine leaf nodes and 15 edges, is constructed as follows. Costs, benefits and probabilities are associated with each edge, which must be an Action or a Reaction object, <a href="#tree-diagram">see figure</a>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="co"># nodes</span>
-  d1 &lt;-<span class="st"> </span>DecisionNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;d1&quot;</span>)
-  d2 &lt;-<span class="st"> </span>DecisionNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;d2&quot;</span>)
-  d3 &lt;-<span class="st"> </span>DecisionNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;d3&quot;</span>)
-  c1 &lt;-<span class="st"> </span>ChanceNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;c1&quot;</span>)
-  c2 &lt;-<span class="st"> </span>ChanceNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;c2&quot;</span>)
-  c3 &lt;-<span class="st"> </span>ChanceNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;c3&quot;</span>)
-  c4 &lt;-<span class="st"> </span>ChanceNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;c4&quot;</span>)
-  t1 &lt;-<span class="st"> </span>LeafNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;t1&quot;</span>)
-  t2 &lt;-<span class="st"> </span>LeafNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;t2&quot;</span>)
-  t3 &lt;-<span class="st"> </span>LeafNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;t3&quot;</span>)
-  t4 &lt;-<span class="st"> </span>LeafNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;t4&quot;</span>)
-  t5 &lt;-<span class="st"> </span>LeafNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;t5&quot;</span>)
-  t6 &lt;-<span class="st"> </span>LeafNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;t6&quot;</span>)
-  t7 &lt;-<span class="st"> </span>LeafNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;t7&quot;</span>)
-  t8 &lt;-<span class="st"> </span>LeafNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;t8&quot;</span>)
-  t9 &lt;-<span class="st"> </span>LeafNode<span class="op">$</span><span class="kw">new</span>(<span class="st">&quot;t9&quot;</span>)
-  <span class="co"># probabilities</span>
-  p.sens &lt;-<span class="st"> </span><span class="fl">0.9</span>
-  p.spec &lt;-<span class="st"> </span><span class="fl">0.7</span>
-  p.gas &lt;-<span class="st"> </span><span class="fl">0.7</span>
-  p.nogas &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">-</span>p.gas
-  p.ptest &lt;-<span class="st"> </span>p.sens<span class="op">*</span>p.gas <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>p.spec)<span class="op">*</span>p.nogas
-  p.ntest &lt;-<span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>p.sens)<span class="op">*</span>p.gas <span class="op">+</span><span class="st"> </span>p.spec<span class="op">*</span>p.nogas
-  p.gas.ptest &lt;-<span class="st"> </span>p.sens<span class="op">*</span>p.gas <span class="op">/</span><span class="st"> </span>p.ptest
-  p.gas.ntest &lt;-<span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>p.sens)<span class="op">*</span>p.gas <span class="op">/</span><span class="st"> </span>p.ntest
-  <span class="co"># edges</span>
-  E &lt;-<span class="st"> </span><span class="kw">list</span>(
-    Action<span class="op">$</span><span class="kw">new</span>(d1,t1,<span class="st">&quot;sell&quot;</span>,<span class="dt">benefit=</span><span class="dv">800</span>),
-    Action<span class="op">$</span><span class="kw">new</span>(d1,c1,<span class="st">&quot;dig&quot;</span>,<span class="dt">cost=</span><span class="dv">300</span>),
-    Reaction<span class="op">$</span><span class="kw">new</span>(c1,t2,<span class="dt">p=</span>p.gas,<span class="dt">benefit=</span><span class="dv">2500</span>,<span class="dt">label=</span><span class="st">&quot;gas&quot;</span>),
-    Reaction<span class="op">$</span><span class="kw">new</span>(c1,t3,<span class="dt">p=</span>p.nogas,<span class="dt">label=</span><span class="st">&quot;no gas&quot;</span>),
-    Action<span class="op">$</span><span class="kw">new</span>(d1,c2,<span class="st">&quot;test&quot;</span>,<span class="dt">cost=</span><span class="dv">50</span>),
-    Reaction<span class="op">$</span><span class="kw">new</span>(c2,d2,<span class="dt">p=</span>p.ntest,<span class="dt">label=</span><span class="st">&quot;negative&quot;</span>),
-    Action<span class="op">$</span><span class="kw">new</span>(d2,t4,<span class="st">&quot;sell&quot;</span>,<span class="dt">benefit=</span><span class="dv">600</span>),
-    Action<span class="op">$</span><span class="kw">new</span>(d2,c3,<span class="st">&quot;dig&quot;</span>,<span class="dt">cost=</span><span class="dv">300</span>),
-    Reaction<span class="op">$</span><span class="kw">new</span>(c3,t5,<span class="dt">p=</span>p.gas.ntest,<span class="dt">benefit=</span><span class="dv">2500</span>,<span class="dt">label=</span><span class="st">&quot;gas&quot;</span>),
-    Reaction<span class="op">$</span><span class="kw">new</span>(c3,t6,<span class="dt">p=</span>(<span class="dv">1</span><span class="op">-</span>p.gas.ntest),<span class="dt">label=</span><span class="st">&quot;no gas&quot;</span>),
-    Reaction<span class="op">$</span><span class="kw">new</span>(c2,d3,<span class="dt">p=</span>p.ptest,<span class="dt">label=</span><span class="st">&quot;positive&quot;</span>),
-    Action<span class="op">$</span><span class="kw">new</span>(d3,t7,<span class="st">&quot;sell&quot;</span>,<span class="dt">benefit=</span><span class="dv">1000</span>),
-    Action<span class="op">$</span><span class="kw">new</span>(d3,c4,<span class="st">&quot;dig&quot;</span>,<span class="dt">cost=</span><span class="dv">300</span>),
-    Reaction<span class="op">$</span><span class="kw">new</span>(c4,t8,<span class="dt">p=</span>p.gas.ptest,<span class="dt">benefit=</span><span class="dv">2500</span>,<span class="dt">label=</span><span class="st">&quot;gas&quot;</span>),
-    Reaction<span class="op">$</span><span class="kw">new</span>(c4,t9,<span class="dt">p=</span>(<span class="dv">1</span><span class="op">-</span>p.gas.ptest),<span class="dt">label=</span><span class="st">&quot;no gas&quot;</span>)
-  )
-  <span class="co"># tree</span>
-  V &lt;-<span class="st"> </span><span class="kw">list</span>(d1,d2,d3, c1,c2,c3,c4, t1,t2,t3,t4,t5,t6,t7,t8,t9)
-  DT&lt;-DecisionTree<span class="op">$</span><span class="kw">new</span>(V,E)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># nodes</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  d1 <span class="ot">&lt;-</span> DecisionNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;d1&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  d2 <span class="ot">&lt;-</span> DecisionNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;d2&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  d3 <span class="ot">&lt;-</span> DecisionNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;d3&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  c1 <span class="ot">&lt;-</span> ChanceNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;c1&quot;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  c2 <span class="ot">&lt;-</span> ChanceNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;c2&quot;</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  c3 <span class="ot">&lt;-</span> ChanceNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;c3&quot;</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  c4 <span class="ot">&lt;-</span> ChanceNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;c4&quot;</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  t1 <span class="ot">&lt;-</span> LeafNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;t1&quot;</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  t2 <span class="ot">&lt;-</span> LeafNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;t2&quot;</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  t3 <span class="ot">&lt;-</span> LeafNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;t3&quot;</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  t4 <span class="ot">&lt;-</span> LeafNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;t4&quot;</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  t5 <span class="ot">&lt;-</span> LeafNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;t5&quot;</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  t6 <span class="ot">&lt;-</span> LeafNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;t6&quot;</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  t7 <span class="ot">&lt;-</span> LeafNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;t7&quot;</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  t8 <span class="ot">&lt;-</span> LeafNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;t8&quot;</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  t9 <span class="ot">&lt;-</span> LeafNode<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;t9&quot;</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># probabilities</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  p.sens <span class="ot">&lt;-</span> <span class="fl">0.9</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  p.spec <span class="ot">&lt;-</span> <span class="fl">0.7</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  p.gas <span class="ot">&lt;-</span> <span class="fl">0.7</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  p.nogas <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">-</span>p.gas</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  p.ptest <span class="ot">&lt;-</span> p.sens<span class="sc">*</span>p.gas <span class="sc">+</span> (<span class="dv">1</span><span class="sc">-</span>p.spec)<span class="sc">*</span>p.nogas</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  p.ntest <span class="ot">&lt;-</span> (<span class="dv">1</span><span class="sc">-</span>p.sens)<span class="sc">*</span>p.gas <span class="sc">+</span> p.spec<span class="sc">*</span>p.nogas</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  p.gas.ptest <span class="ot">&lt;-</span> p.sens<span class="sc">*</span>p.gas <span class="sc">/</span> p.ptest</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  p.gas.ntest <span class="ot">&lt;-</span> (<span class="dv">1</span><span class="sc">-</span>p.sens)<span class="sc">*</span>p.gas <span class="sc">/</span> p.ntest</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># edges</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  E <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    Action<span class="sc">$</span><span class="fu">new</span>(d1,t1,<span class="st">&quot;sell&quot;</span>,<span class="at">benefit=</span><span class="dv">800</span>),</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    Action<span class="sc">$</span><span class="fu">new</span>(d1,c1,<span class="st">&quot;dig&quot;</span>,<span class="at">cost=</span><span class="dv">300</span>),</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    Reaction<span class="sc">$</span><span class="fu">new</span>(c1,t2,<span class="at">p=</span>p.gas,<span class="at">benefit=</span><span class="dv">2500</span>,<span class="at">label=</span><span class="st">&quot;gas&quot;</span>),</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    Reaction<span class="sc">$</span><span class="fu">new</span>(c1,t3,<span class="at">p=</span>p.nogas,<span class="at">label=</span><span class="st">&quot;no gas&quot;</span>),</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    Action<span class="sc">$</span><span class="fu">new</span>(d1,c2,<span class="st">&quot;test&quot;</span>,<span class="at">cost=</span><span class="dv">50</span>),</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    Reaction<span class="sc">$</span><span class="fu">new</span>(c2,d2,<span class="at">p=</span>p.ntest,<span class="at">label=</span><span class="st">&quot;negative&quot;</span>),</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    Action<span class="sc">$</span><span class="fu">new</span>(d2,t4,<span class="st">&quot;sell&quot;</span>,<span class="at">benefit=</span><span class="dv">600</span>),</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    Action<span class="sc">$</span><span class="fu">new</span>(d2,c3,<span class="st">&quot;dig&quot;</span>,<span class="at">cost=</span><span class="dv">300</span>),</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    Reaction<span class="sc">$</span><span class="fu">new</span>(c3,t5,<span class="at">p=</span>p.gas.ntest,<span class="at">benefit=</span><span class="dv">2500</span>,<span class="at">label=</span><span class="st">&quot;gas&quot;</span>),</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    Reaction<span class="sc">$</span><span class="fu">new</span>(c3,t6,<span class="at">p=</span>(<span class="dv">1</span><span class="sc">-</span>p.gas.ntest),<span class="at">label=</span><span class="st">&quot;no gas&quot;</span>),</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    Reaction<span class="sc">$</span><span class="fu">new</span>(c2,d3,<span class="at">p=</span>p.ptest,<span class="at">label=</span><span class="st">&quot;positive&quot;</span>),</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    Action<span class="sc">$</span><span class="fu">new</span>(d3,t7,<span class="st">&quot;sell&quot;</span>,<span class="at">benefit=</span><span class="dv">1000</span>),</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    Action<span class="sc">$</span><span class="fu">new</span>(d3,c4,<span class="st">&quot;dig&quot;</span>,<span class="at">cost=</span><span class="dv">300</span>),</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    Reaction<span class="sc">$</span><span class="fu">new</span>(c4,t8,<span class="at">p=</span>p.gas.ptest,<span class="at">benefit=</span><span class="dv">2500</span>,<span class="at">label=</span><span class="st">&quot;gas&quot;</span>),</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    Reaction<span class="sc">$</span><span class="fu">new</span>(c4,t9,<span class="at">p=</span>(<span class="dv">1</span><span class="sc">-</span>p.gas.ptest),<span class="at">label=</span><span class="st">&quot;no gas&quot;</span>)</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  <span class="co"># tree</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  V <span class="ot">&lt;-</span> <span class="fu">list</span>(d1,d2,d3, c1,c2,c3,c4, t1,t2,t3,t4,t5,t6,t7,t8,t9)</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>  DT<span class="ot">&lt;-</span>DecisionTree<span class="sc">$</span><span class="fu">new</span>(V,E)</span></code></pre></div>
 </div>
 <div id="tree-diagram" class="section level2">
 <h2>Tree diagram</h2>
+<div class="figure" style="text-align: center">
+<img src="data:image/png;base64,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" alt="Decision tree used in the shale gas problem" />
+<p class="caption">
+Decision tree used in the shale gas problem
+</p>
+</div>
 </div>
 </div>
 <div id="evaluating-the-strategies" class="section level1">
 <h1>Evaluating the strategies</h1>
-<p>There are a total of 12 possible strategies (3 choices from node <code>d1</code> <span class="math inline">\(\times\)</span> 2 choices at node <code>d2</code> <span class="math inline">\(\times\)</span> 2 choices at node <code>d3</code>). But some of these are not unique. For example if the choice at node <code>d1</code> is &quot;sell&quot;, the choices at nodes <code>d2</code> and <code>d3</code> (4 possible combinations) are unimportant; all four such strategies are identical.</p>
+<p>There are a total of 12 possible strategies (3 choices from node <code>d1</code> <span class="math inline">\(\times\)</span> 2 choices at node <code>d2</code> <span class="math inline">\(\times\)</span> 2 choices at node <code>d3</code>). But some of these are not unique. For example if the choice at node <code>d1</code> is “sell”, the choices at nodes <code>d2</code> and <code>d3</code> (4 possible combinations) are unimportant; all four such strategies are identical.</p>
 <p>Method <code>evaluate</code> calculates the expected cost, benefit and utility of each traversable path for each strategy, and aggregates by strategy. The results for the gas problem are computed as follows. Pay-off is defined as benefit minus cost.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># find optimal strategies</span>
-RES &lt;-<span class="st"> </span>DT<span class="op">$</span><span class="kw">evaluate</span>()
-RES<span class="op">$</span>Payoff &lt;-<span class="st"> </span>RES<span class="op">$</span>Benefit<span class="op">-</span>RES<span class="op">$</span>Cost</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find optimal strategies</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>RES <span class="ot">&lt;-</span> DT<span class="sc">$</span><span class="fu">evaluate</span>()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>RES<span class="sc">$</span>Payoff <span class="ot">&lt;-</span> RES<span class="sc">$</span>Benefit<span class="sc">-</span>RES<span class="sc">$</span>Cost</span></code></pre></div>
 <p>This gives the following pay-off for each strategy:</p>
 <table>
 <thead>
@@ -305,10 +362,10 @@ RES<span class="op">$</span>Payoff &lt;-<span class="st"> </span>RES<span class=
 <p>The optimal strategy is test/sell/dig, <em>i.e.</em> test, sell if negative and dig otherwise. The expected pay-off from this strategy is 1477.</p>
 </div>
 <div id="references" class="section level1 unnumbered">
-<h1>References</h1>
-<div id="refs" class="references">
-<div id="ref-kaminski2018">
-<p>1 Kamiński B, Jakubczyk M, Szufel P. A framework for sensitivity analysis of decision trees. <em>Central European Journal of Operational Research</em> 2018;<strong>26</strong>:135–59. <a href="https://doi.org/10.1007/s10100-017-0479-6" class="uri">https://doi.org/10.1007/s10100-017-0479-6</a>.</p>
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-kaminski2018" class="csl-entry">
+<div class="csl-left-margin">1 </div><div class="csl-right-inline">Kamiński B, Jakubczyk M, Szufel P. A framework for sensitivity analysis of decision trees. <em>Central European Journal of Operational Research</em> 2018;<strong>26</strong>:135–59. <a href="https://doi.org/10.1007/s10100-017-0479-6">https://doi.org/10.1007/s10100-017-0479-6</a>.</div>
 </div>
 </div>
 </div>
