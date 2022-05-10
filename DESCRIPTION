@@ -1,6 +1,6 @@
 Package: rdecision
 Title: Decision Analytic Modelling in Health Economics
-Version: 1.1.0
+Version: 1.1.1
 Authors@R: c(
   person(given="Andrew", family="Sims", 
          email = "andrew.sims@newcastle.ac.uk", 
@@ -9,7 +9,11 @@ Authors@R: c(
   person(given="Kim", family="Fairbairn", 
          email="kim.fairbairn@nhs.net", 
          role=c("aut"),
-         comment = c(ORCID="0000-0001-5108-6279")))
+         comment = c(ORCID="0000-0001-5108-6279")),
+  person(given="Paola", family="Cognigni",
+         email="paola.cognigni@nhs.net",
+         role=c("aut"),
+         comment = c(ORCID="0000-0001-5418-3103")))
 Description: Classes and functions for modelling health care interventions 
   using decision trees and semi-Markov models. Mechanisms are provided for 
   associating an uncertainty distribution with each source variable and for
@@ -22,13 +26,14 @@ Suggests: covr, knitr, pander, rmarkdown, testthat (>= 3.0.0), utf8
 License: GPL-3
 Language: en-GB
 Encoding: UTF-8
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2021-09-08 21:35:07 UTC; andrew
+Packaged: 2022-05-10 15:33:24 UTC; simsa
 Author: Andrew Sims [aut, cre] (<https://orcid.org/0000-0002-9553-7278>),
-  Kim Fairbairn [aut] (<https://orcid.org/0000-0001-5108-6279>)
+  Kim Fairbairn [aut] (<https://orcid.org/0000-0001-5108-6279>),
+  Paola Cognigni [aut] (<https://orcid.org/0000-0001-5418-3103>)
 Maintainer: Andrew Sims <andrew.sims@newcastle.ac.uk>
 Repository: CRAN
-Date/Publication: 2021-09-08 22:00:02 UTC
+Date/Publication: 2022-05-10 16:00:05 UTC

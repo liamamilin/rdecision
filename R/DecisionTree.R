@@ -1,7 +1,5 @@
 #' @title A decision tree
-#' 
 #' @description An R6 class to represent a decision tree model.
-#' 
 #' @details A class to represent a decision tree. An object contains a tree of
 #' decision nodes, chance nodes and leaf nodes, connected by edges
 #' (either actions or reactions). It inherits from class \code{Arborescence} and
@@ -55,10 +53,9 @@ DecisionTree <- R6::R6Class(
   ),
   public = list(
     
-    #' @description 
-    #' Create a new decision tree. The tree must consist of a set of
-    #' nodes and a set of edges which satisfy the conditions given
-    #' in the details section of this class.
+    #' @description Create a new decision tree. 
+    #' @details The tree must consist of a set of nodes and a set of edges 
+    #' which satisfy the conditions given in the details section of this class.
     #' @param V A list of nodes.
     #' @param E A list of edges.
     #' @return A \code{DecisionTree} object
@@ -121,8 +118,7 @@ DecisionTree <- R6::R6Class(
       return(invisible(self))
     },
     
-    #' @description 
-    #' Find the decision nodes in the tree.
+    #' @description Find the decision nodes in the tree.
     #' @param what A character string defining what to return. Must be one
     #' of "node", "label" or "index".
     #' @return A list of \code{DecisionNode} objects (for what="node"); a list
@@ -149,8 +145,7 @@ DecisionTree <- R6::R6Class(
       return(rc)      
     },
 
-    #' @description 
-    #' Find the chance nodes in the tree.
+    #' @description Find the chance nodes in the tree.
     #' @return A list of \code{ChanceNode} objects.
     chance_nodes = function() {
       ic <- which(sapply(private$V, function(v){inherits(v,what="ChanceNode")}),
@@ -158,8 +153,7 @@ DecisionTree <- R6::R6Class(
       return(private$V[ic])      
     },
     
-    #' @description 
-    #' Find the leaf nodes in the tree.
+    #' @description Find the leaf nodes in the tree.
     #' @param what One of "node" (returns Node objects), "label" (returns the
     #' leaf node labels) or "index" (returns the vertex indexes of the leaf
     #' nodes).
@@ -188,8 +182,8 @@ DecisionTree <- R6::R6Class(
       return(rc)      
     },
 
-    #' @description 
-    #' Return the edges that have the specified decision node as their source.
+    #' @description Find the edges that have the specified decision node as 
+    #' their source.
     #' @param d A decision node.
     #' @return A list of \code{Action} edges.
     actions = function(d) {
@@ -219,9 +213,9 @@ DecisionTree <- R6::R6Class(
       return(private$E[ie])
     },
     
-    #' @description 
-    #' Find all the model variables of type \code{ModVar} that have been 
-    #' specified as values associated with the nodes and edges of the tree.
+    #' @description Find all the model variables of type \code{ModVar}.
+    #' @details Find \code{ModVar}s that have been specified as values 
+    #' associated with the nodes and edges of the tree.
     #' @return A list of \code{ModVar}s.
     modvars = function() {
       # create list
@@ -242,8 +236,7 @@ DecisionTree <- R6::R6Class(
       return(unique(mv))
     },
     
-    #' @description 
-    #' Tabulate the model variables.
+    #' @description Tabulate the model variables.
     #' @param expressions A logical that defines whether expression model
     #' variables should be included in the tabulation. 
     #' @return Data frame with one row per model variable, as follows:
@@ -324,9 +317,9 @@ DecisionTree <- R6::R6Class(
       return(DF)
     },
     
-    #' @description Draw the decision tree to the current graphics output. Uses
-    #' the algorithm of Walker (1989) to distribute the nodes compactly (see
-    #' the \link{Arborescence} class help for details).
+    #' @description Draw the decision tree to the current graphics output. 
+    #' @details Uses the algorithm of Walker (1989) to distribute the nodes 
+    #' compactly (see the \link{Arborescence} class help for details).
     #' @param border If TRUE draw a light grey border around the plot area.
     #' @return No return value.
     draw = function(border=FALSE) {
@@ -508,9 +501,10 @@ DecisionTree <- R6::R6Class(
       return(invisible(self))
     },
     
-    #' @description Tests whether a strategy (a unanimous prescription of an
-    #' action in each decision node, specified as a list of nodes) is a valid
-    #' strategy for this decision tree.
+    #' @description Tests whether a strategy is valid.
+    #' @details A strategy is a unanimous prescription of an action in each 
+    #' decision node, specified as a list of actions.  This checks whether the
+    #' strategy is valid for this decision tree.
     #' @param strategy A list of Action edges.
     #' @return TRUE if the strategy is valid for this tree. Returns
     #' FALSE if the list of Action edges are not a valid strategy.
@@ -539,10 +533,11 @@ DecisionTree <- R6::R6Class(
       return(TRUE)
     },
 
-    #' @description Find all potential strategies for the decision tree. A
-    #' strategy is a unanimous prescription of the actions at each decision 
-    #' node. If there are decision nodes that are descendants of other nodes
-    #' in the tree, the strategies returned will not necessarily be unique.
+    #' @description Find all potential strategies for the decision tree. 
+    #' @details A strategy is a unanimous prescription of the actions at each
+    #' decision node. If there are decision nodes that are descendants of other
+    #' nodes in the tree, the strategies returned will not necessarily
+    #' be unique.
     #' @param what A character string defining what to return. Must be one
     #' of "label" or "index".
     #' @param select A single strategy (given as a list of action edges, with
@@ -612,10 +607,10 @@ DecisionTree <- R6::R6Class(
       return(TT)
     },
 
-    #' @description Find all paths walked in each possible strategy. A strategy 
-    #' is a unanimous prescription of an action in each decision node. Some 
-    #' paths can be walked in more than one strategy, if there exist paths
-    #' that do not pass a decision node.
+    #' @description Find all paths walked in each possible strategy. 
+    #' @details A strategy is a unanimous prescription of an action in each 
+    #' decision node. Some paths can be walked in more than one strategy, if
+    #' there exist paths that do not pass a decision node.
     #' @return A data frame, where each row is a path walked in a strategy. The
     #' structure is similar to that returned by \code{strategy_table} but 
     #' includes an extra column, \code{Leaf} which gives the leaf node index of 
@@ -657,13 +652,12 @@ DecisionTree <- R6::R6Class(
       return(P)
     },
 
-    #' @description 
-    #' Evaluate the components of pay-off associated with a set of walks in the
-    #' decision tree. For each walk, probability, cost, benefit and utility are
-    #' calculated. 
-    #' @details There is minimal checking of the argument because this function 
-    #' is intended to be called repeatedly during tree evaluation, including
-    #' PSA. 
+    #' @description Evaluate the components of pay-off associated with a set of
+    #' walks in the decision tree. 
+    #' @details For each walk, probability, cost, benefit and utility are
+    #' calculated. There is minimal checking of the argument because this
+    #' function is intended to be called repeatedly during tree evaluation, 
+    #' including PSA. 
     #' @param W A list of root-to-leaf walks. Each walk must start with the
     #' root node and end with a leaf node. Normally this is all the root to leaf
     #' paths in a tree.
@@ -742,11 +736,55 @@ DecisionTree <- R6::R6Class(
       return(PAYOFF)
     },
 
-    #' @description 
-    #' Evaluate each strategy. Starting with the root, the function
-    #' works though all possible paths to leaf nodes and computes the 
-    #' probability, cost, benefit and utility of each, then optionally 
-    #' aggregates by strategy or run.   
+    #' @description Evaluate each strategy. 
+    #' @details Starting with the root, the function works though all possible
+    #' paths to leaf nodes and computes the probability, cost, benefit and 
+    #' utility of each, then optionally aggregates by strategy or run.   
+    #' The columns of the returned data frame are:
+    #' \describe{
+    #' \item{\code{by="path"}}{
+    #'   \describe{
+    #'     \item{\code{Leaf}}{The label of terminating leaf node}
+    #'     \item{\code{<label of first decision node>}}{label of action leaving 
+    #'           the node}
+    #'     \item{\code{<label of second decision node (etc.)>}}{label of action}
+    #'     \item{\code{Probability}}{Probability of traversing the path}
+    #'     \item{\code{Cost}}{Cost of traversing the path}
+    #'     \item{\code{Benefit}}{Benefit of traversing the path}
+    #'     \item{\code{Utility}}{Utility of traversing the path}
+    #'     \item{\code{QALY}}{QALY of traversing the path}
+    #'     \item{\code{Run}}{Run number}
+    #'   }
+    #' }
+    #' 
+    #' \item{\code{by="strategy"}}{
+    #'   \describe{
+    #'     \item{\code{<label of first decision node>}}{label of action leaving 
+    #'           the node}
+    #'     \item{\code{<label of second decision node (etc)}}{label of action}
+    #'     \item{\code{Run}}{Run number}
+    #'     \item{\code{Probability}}{\eqn{\Sigma p_i} for the run (1)}
+    #'     \item{\code{Cost}}{Aggregate cost of the strategy}
+    #'     \item{\code{Benefit}}{Aggregate benefit of the strategy}
+    #'     \item{\code{Utility}}{Aggregate utility of the strategy}
+    #'     \item{\code{QALY}}{Aggregate QALY of the strategy}
+    #'   }
+    #' } 
+    #' 
+    #' \item{\code{by="run"}}{
+    #'   \describe{
+    #'     \item{\code{Run}}{Run number}
+    #'     \item{\code{Probability.<S>}}{Probability for strategy S}
+    #'     \item{\code{Cost.<S>}}{Cost for strategy S}
+    #'     \item{\code{Benefit.<S>}}{Benefit for strategy S}
+    #'     \item{\code{Utility.<S>}}{Benefit for strategy S}
+    #'     \item{\code{QALY.<S>}}{QALY for strategy S}
+    #'   }
+    #'   where <S> is string composed of the action labels in strategy \code{S}
+    #'   concatenated with an underscore and there will be one probability etc.,
+    #'   column for each strategy.
+    #'   }
+    #' }
     #' @param setvars One of "expected" (evaluate with each model variable at
     #' its mean value), "random" (sample each variable from its uncertainty 
     #' distribution and evaluate the model), "q2.5", "q50", "q97.5" (set each
@@ -764,55 +802,6 @@ DecisionTree <- R6::R6Class(
     #' concatenated strategy names and one (cost, benefit, utility, QALY) column
     #' for each strategy. 
     #' @return A data frame whose columns depend on \code{by}; see "Details".
-    #' @details 
-    #' The columns of the returned data frame are:
-    #' \describe{
-    #' \item{\code{by="path"}}{
-    #'   \describe{
-    #'     \item{}{}
-    #'     \item{\code{Leaf}}{The label of terminating leaf node}
-    #'     \item{\code{<label of first decision node>}}{label of action leaving 
-    #'           the node}
-    #'     \item{\code{<label of second decision node (etc.)>}}{label of action}
-    #'     \item{\code{Probability}}{Probability of traversing the path}
-    #'     \item{\code{Cost}}{Cost of traversing the path}
-    #'     \item{\code{Benefit}}{Benefit of traversing the path}
-    #'     \item{\code{Utility}}{Utility of traversing the path}
-    #'     \item{\code{QALY}}{QALY of traversing the path}
-    #'     \item{\code{Run}}{Run number}
-    #'   }
-    #' }
-    #' 
-    #' \item{\code{by="strategy"}}{
-    #'   \describe{
-    #'     \item{}{}
-    #'     \item{\code{<label of first decision node>}}{label of action leaving 
-    #'           the node}
-    #'     \item{\code{<label of second decision node (etc)}}{label of action}
-    #'     \item{\code{Run}}{Run number}
-    #'     \item{\code{Probability}}{\eqn{\Sigma p_i} for the run (1)}
-    #'     \item{\code{Cost}}{Aggregate cost of the strategy}
-    #'     \item{\code{Benefit}}{Aggregate benefit of the strategy}
-    #'     \item{\code{Utility}}{Aggregate utility of the strategy}
-    #'     \item{\code{QALY}}{Aggregate QALY of the strategy}
-    #'   }
-    #' } 
-    #' 
-    #' \item{\code{by="run"}}{
-    #'   \describe{
-    #'     \item{}{}
-    #'     \item{\code{Run}}{Run number}
-    #'     \item{\code{Probability.<S>}}{Probability for strategy S}
-    #'     \item{\code{Cost.<S>}}{Cost for strategy S}
-    #'     \item{\code{Benefit.<S>}}{Benefit for strategy S}
-    #'     \item{\code{Utility.<S>}}{Benefit for strategy S}
-    #'     \item{\code{QALY.<S>}}{QALY for strategy S}
-    #'   }
-    #'   where <S> is string composed of the action labels in strategy \code{S}
-    #'   concatenated with an underscore and there will be one probability etc.,
-    #'   column for each strategy.
-    #'   }
-    #' }
     evaluate = function(setvars="expected", N=1, by="strategy") {
       # check arguments
       if (!is.character(setvars)) {
@@ -928,10 +917,13 @@ DecisionTree <- R6::R6Class(
       return(PAYOFF)
     },
 
-    #' @description
-    #' Create a "tornado" diagram to compare two strategies for traversing
-    #' the decision tree. A strategy is a unanimous prescription of the actions
-    #' at each decision node.
+    #' @description Create a "tornado" diagram.
+    #' @details Used to compare two strategies for traversing the decision tree.
+    #' A strategy is a unanimous prescription of the actions at each 
+    #' decision node. The extreme values of each input variable are the upper 
+    #' and lower 95\% confidence limits of the uncertainty distributions of each 
+    #' variable. This ensures that the range of each input is defensible 
+    #' (Briggs 2012).
     #' @param index The index strategy (option) to be evaluated.
     #' @param ref The reference strategy (option) with which the index strategy
     #' will be compared.
@@ -952,10 +944,6 @@ DecisionTree <- R6::R6Class(
     #' for: minimum value of the variable, maximum value of the variable,
     #' minimum value of the outcome and maximum value of the outcome. NULL
     #' if there are no \code{ModVar}s.
-    #' @details The extreme values of each input variable are the upper and 
-    #' lower 95\% confidence limits of the uncertainty distributions of each 
-    #' variable. This ensures that the range of each input is defensible 
-    #' (Briggs 2012).
     tornado = function(index, ref, outcome="saving", exclude=NULL, draw=TRUE) {
       # find all input modvars, excluding expressions and those stated
       mvlist <- self$modvars()
@@ -1206,6 +1194,10 @@ DecisionTree <- R6::R6Class(
     #' @description Find the threshold value of a model variable at which
     #' the cost difference is zero or the ICER is equal to a threshold, for an
     #' index strategy compared with a reference strategy. 
+    #' @details Uses a rudimentary bisection method method to find the root.
+    #' In PSA terms, the algorithm finds the value of the specified model
+    #' variable for which 50\% of runs are cost saving (or above the ICER
+    #' threshold) and 50\% are cost incurring (below the ICER threshold). 
     #' @param index The index strategy (option) to be evaluated.
     #' @param ref The reference strategy (option) with which the index strategy
     #' will be compared.
@@ -1234,10 +1226,6 @@ DecisionTree <- R6::R6Class(
     #' @param lambda The ICER threshold (threshold ratio) for outcome="ICER".
     #' @param nmax Maximum number if iterations allowed to reach convergence.
     #' @return Value of the model variable of interest at the threshold.
-    #' @details Uses a rudimentary bisection method method to find the root.
-    #' In PSA terms, the algorithm finds the value of the specified model
-    #' variable for which 50\% of runs are cost saving (or above the ICER
-    #' threshold) and 50\% are cost incurring (below the ICER threshold). 
     threshold = function(index, ref, outcome="saving", mvd, a, b, tol, 
                          lambda=NULL, nmax=1000) {
       # find all input modvars, excluding expressions

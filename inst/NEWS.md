@@ -1,9 +1,38 @@
+# rdecision 1.1.1
+
+* Edited codecov badge reference in readme.Rmd with revised preferred URL.
+* Changed citation style to one that does not write DOIs (which sometimes
+  cause errors on CRAN checks).
+* Changed difftime class checks to use inherits(), not class(), as per CRAN
+  checks.
+* Removed empty labels in \describe blocks for DecisionTree$evaluate(), as per
+  new CRAN warnings.
+* Improved code efficiency in `SemiMarkovModel$cycle()` by generating 
+  intermediate results as matrices.
+* Added Paola to the package author list.
+* Added Paola's Decision Tree tutorial vignette.
+* Added extra tests to the test harness for `ExprModVar` to check that nested
+  autocorrelation is supported (i.e. when at least one model variable appears
+  twice or more as an operand of an expression, when it is evaluated
+  recursively).
+* Clarified the meanings of the options to `set` for `ModVar` and `ExprModVar`
+  in the documentation for those classes.
+* Each test in test-ExprModVar that involves sampling has an expected failure
+  rate of around 0.1% and is excluded from CRAN.
+* Each `ExprModVar` now has an empirical distribution, which is sampled on 
+  creation, to optimize functions `mu_hat`, `sigma_hat` and `q_hat`, at Paola's
+  suggestion.
+* Added class `EmpiricalDistribution` and its test harness. 
+* Changed `CohortMarkovModel` to `SemiMarkovModel` in README. 
+* Corrected `OccCost` and `EntryCost` columns in `SemiMarkovModel$cycle` to make
+  them per person costs.
+* Default occupancy cost per state set to zero in `SemiMarkovModel`.
 
 # rdecision 1.1.0
 
 * Added data/BriggsEx47, as example 4.7 from Briggs et al to /data.
 * Added elementary semi-Markov model vignette (Chancellor).
-* Added narrative to `SemitMarkovModel` as caution for converting between 
+* Added narrative to `SemiMarkovModel` as caution for converting between 
   transition rates and per-cycle probabilities. Cited work of Jones et al
   (2017) and Welton (2005) which motivated the approach taken.
 * Added `set_probabilities` method to `SemiMarkovModel` to set transition 
