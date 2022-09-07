@@ -15,7 +15,19 @@
 
 <title>A directed graph puzzle (Bodycombe 2020)</title>
 
-<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -109,13 +121,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -149,7 +168,187 @@ div.csl-indent {
 }
 </style>
 
-<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
 
 
 
@@ -161,7 +360,8 @@ div.csl-indent {
 
 
 
-<h1 class="title toc-ignore">A directed graph puzzle (Bodycombe 2020)</h1>
+<h1 class="title toc-ignore">A directed graph puzzle (Bodycombe
+2020)</h1>
 <h3 class="subtitle">Burger run</h3>
 <h4 class="author">Andrew J. Sims</h4>
 <h4 class="date">18th June 2020</h4>
@@ -170,18 +370,38 @@ div.csl-indent {
 
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>This puzzle was published in <em>New Scientist</em> in June 2020.<span class="citation"><sup>1</sup></span> It is a practical example of a problem in graph theory. This vignette explains how the puzzle can be solved with <code>redecison</code>.</p>
+<p>This puzzle was published in <em>New Scientist</em> in June 2020<span class="citation"><sup>1</sup></span>. It is a practical example of a
+problem in graph theory. This vignette explains how the puzzle can be
+solved with <code>redecison</code>.</p>
 </div>
 <div id="the-puzzle" class="section level1">
 <h1>The puzzle</h1>
-<p>Three friends agree to drive from A to B via the shortest road possible (driving down or right at all times). They are hungry, so also want to drive through a Big Burger restaurant, marked in red. They are arguing about how many shortest routes will pass through exactly one Big Burger. Xenia: “I reckon there are 10.” Yolanda: “I’d say more like 20.” Zara: “No you’re both wrong, I bet there are more than 50.” Who is right, or closest to right?</p>
+<p>Three friends agree to drive from A to B via the shortest road
+possible (driving down or right at all times). They are hungry, so also
+want to drive through a Big Burger restaurant, marked in red. They are
+arguing about how many shortest routes will pass through exactly one Big
+Burger. Xenia: “I reckon there are 10.” Yolanda: “I’d say more like 20.”
+Zara: “No you’re both wrong, I bet there are more than 50.” Who is
+right, or closest to right?</p>
 <p><img src="data:image/png;base64,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xmEHQN8z0DjsAOh7BhqHHQB9z0DjsAOg7xloHHYA9D0DjcMOgL5noHHYAdD3DDQOOwD6noHGYQdA3zPQOOwA6HsGGocdAH3PQOOwA6DvGWgcdgD0PQONww6AvmegcdgB0PcMNA47APqegcZhB0DfM9A47ADoewYahx0Afc9A47ADoO8ZaBx2APS9k8s+T1YuxjHQSXunl4GerlyMY6CT9s7Pjo/PzlcuxjFQ99DU+cIPNm0vTp0v/GDT9uLU+cIPNm0vTp0v/GDT9uLU+cIPNm0vTp0v/GDT9uLU+cIPNm0vTp0v/GDT9uLU+cIPNm0vTp0v/GBX987P7t65IXev/iuS/njj1PnCD3Z17/Smeb7lzRz0xxunzreK228n0NtZp70veEPqfKsw0Iemzhf+kudL/GLqfOEH85ekxdT5wg82bS9OnS/8YNP24tT5wg82bS9OnS/8YNP24tT5wg82bS9OnS/8YNP24tT5wg82bS9OnS/8YNP24tT5wg82bS9OnS/8YNP24tT5LhVe/1Ew9KAMNMzaJ3j9h2nRgzLQMGuf4PUfR0gPykDDrH2C77+BaOUiPSgDDWOgrL04db4GitqLU+droKi9OHW+Borai1Pna6CovTh1vgaK2otT52ugqL04db4GitqLU+droKi9OHW+Borai1Pna6CovTh1vgaK2otT52ugqL04db4GitqLU+droKi9OHW+Borai1Pna6CovTh1vgaK2otT52ugqL04db4GitqLU+droKi9OHW+Borai1Pna6CovTh1vgaK2otT52ugqL04db4GitqLU+droKi9OHW+Borai1Pna6CovTh1vgaK2otT52ugqL04db4GitqLU+droKi9OHW+Borai1Pna6CovTh1vgaK2otT52ugqL04db4GitqLU+droKi9OHW+Borai1Pna6CovTh1vgaK2otT52ugqL04db4GitqLU+droKi9OHW+Borai1Pna6CovTh1vkuFTy77PFm5SA/KQMOsfYJPLwM9XblID8pAw6x9gs/Pjo/Pzlcu0oMy0DD0g03bi1PnCz/YtL04db7wg03bi1PnCz/YtL04db7wg03bi1PnCz/YtL04db7wg03bi1PnCz/YtL04db7wg03bi1PnCz/YtL04db7wg2X3zs/u3rkhd6/+K9dAw3QFtXrv9KZ5vuXNMAYaZhvN7bcT6O2rG3tf8IbU+Y7GQPF0vSSv3vMlHk9XUKv3/CUJT1dQ//97cep84Qebthenzhd+sGl7cep84Qebthenzhd+sGl7cep84Qebthenzhd+sGl7cep84Qebthenzhd+sGl7cep84Qebthenzhd9sHkfpROnzhd9sHkfRhanzhd9sHkf5xinzhd9sPtvIFq5yH68B6DOF30wA11OnS/6YAa6nDpf9MEMdDl1vuiDGehy6nzRBzPQ5dT5og9moMup80UfzECXU+eLPpiBLqfOF30wA11OnS/6YAa6nDpf9MEMdDl1vuiDGehy6nzRBzPQ5dT5og9moMup80UfzECXU+eLPpiBLqfOF30wA11OnS/6YAa6nDpf9MEMdDl1vuiDGehy6nzRBzPQ5dT5og9moMup80UfzECXU+eLPpiBLqfOF30wA11OnS/6YAa6nDpf9MEMdDl1vuiDGehy6nzRBzPQ5dT5og9moMup80UfzECXU+eLPpiBLqfOF30wA11OnS/6YAa6nDpf9MEMdDl1vuiDGehy6nzRBzPQ5dT5og9moMup80UfzECXU+eLPpiBLqfOF30wA11OnS/6YAa6nDpf9MEMdDl1vuiDGehy6nzRBzPQ5dT5og9moMup80UfzECXU+eLPtjJZZ8nKxfZj/cA1PmiD3Z6GejpykX24z0Adb7og52fHR+fna9cZD/eA1DnCz/YtL04db7wg03bi1PnCz/YtL04db7wg03bi1PnCz/YtL04db7wg03bi1PnCz/YtL04db7wg03bi1PnCz/YtL04db7wg03bi1PnCz/YtL04db7wg03bi1PnKw/J3he8IW2+t/a+bzu39r7gDWkLVB6eo3ulvvfJn+8tch0MdB5H25efe+7Zpx7fXtzb5BoY6DyOtt9efvnjYx/d2+QaGOg83gz04sl3/Wtnk2tgoPN4EOiHP7WzyHUw0HncC/SNPz/76E/2NrkGBjqPozf/4vT83iLXwUDnce+3+Oee+fj2tD+DCpAHP4N+Y3t5Z5NrYKDzeBDo77Zv72xyDQx0Hg8C/f32nZ1NroGBzuNBoN/cXtrZ5BoY6DyOtq8eHR09++ntE2/srfK/MdB53P8z0yMfeuaVvU2ugYEKGgMVNAYqaAxU0BiooDFQQWOggsZABY2BChoDFTQGKmgMVNAYqKAxUEFjoILGQAWNgQoaAxU0BipoDFTQGKigMVBBY6CCxkAFjYEKGgMVNAYqaAxU0BiooDFQQWOggsZABY2BChoDFTQGKmgMVNAYqKAxUEFjoILGQAWNgQoaAxU0BipoDFTQGKigMVBBY6CCxkAFjYEKGgMVNAYqaAxU0BiooDFQQWOggsZABY2BChoDFTQGKmgMVNAYqKAxUEFjoILGQAWNgQqafwOQNoku/Sub1gAAAABJRU5ErkJggg==" style="display: block; margin: auto;" /></p>
 </div>
 <div id="constructing-the-graph" class="section level1">
 <h1>Constructing the graph</h1>
-<p>The grid has 25 nodes and 40 edges (20 horizontal and 20 vertical). These form a directed graph because it is allowed to drive down or right only. Seven of the edges are defined as “Big Burger” edges. Because it is not possible to find a path from any node which revisits that node, the graph is acyclic (a directed acyclic graph, DAG).</p>
-<p>Although it possible to construct the graph by creating 25 node objects explicitly, it is more compact to create a list of vertices in a loop construct. Indices <span class="math inline">\(i = [1 .. 5]\)</span> and <span class="math inline">\(j = [1 .. 5]\)</span> are used to identify grid intersections in the vertical and horizontal directions respectively. Each node is labelled as <span class="math inline">\(N_{i,j}\)</span> and the index of node <span class="math inline">\(N_{i,j}\)</span> in the list is <span class="math inline">\(5(i-1)+j\)</span>.</p>
-<p>Similarly, the 40 edges (arrows) are constructed more compactly in a list, with horizontal edges being labelled <span class="math inline">\(H_{i,j}\)</span> (the horizontal edge joining node <span class="math inline">\(N_{i,j}\)</span> to node <span class="math inline">\(N_{i,j+1}\)</span>) and the vertical edges similarly as <span class="math inline">\(V_{i,j}\)</span>.</p>
+<p>The grid has 25 nodes and 40 edges (20 horizontal and 20 vertical).
+These form a directed graph because it is allowed to drive down or right
+only. Seven of the edges are defined as “Big Burger” edges. Because it
+is not possible to find a path from any node which revisits that node,
+the graph is acyclic (a directed acyclic graph, DAG).</p>
+<p>Although it possible to construct the graph by creating 25 node
+objects explicitly, it is more compact to create a list of vertices in a
+loop construct. Indices <span class="math inline">\(i = [1 ..
+5]\)</span> and <span class="math inline">\(j = [1 .. 5]\)</span> are
+used to identify grid intersections in the vertical and horizontal
+directions respectively. Each node is labelled as <span class="math inline">\(N_{i,j}\)</span> and the index of node <span class="math inline">\(N_{i,j}\)</span> in the list is <span class="math inline">\(5(i-1)+j\)</span>.</p>
+<p>Similarly, the 40 edges (arrows) are constructed more compactly in a
+list, with horizontal edges being labelled <span class="math inline">\(H_{i,j}\)</span> (the horizontal edge joining node
+<span class="math inline">\(N_{i,j}\)</span> to node <span class="math inline">\(N_{i,j+1}\)</span>) and the vertical edges
+similarly as <span class="math inline">\(V_{i,j}\)</span>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create vertices</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
@@ -206,8 +426,14 @@ div.csl-indent {
 </div>
 <div id="finding-the-paths" class="section level1">
 <h1>Finding the paths</h1>
-<p>Method <code>paths</code> finds all possible paths between any two nodes, where a <em>path</em> is defined as a sequence of distinct and adjacent nodes. Because the restaurants are specific edges, each path is converted to a <em>walk</em>, which is a path defined as sequence of connected, non-repeating edges.</p>
-<p>In this case, the number of restaurants traversed by each path is counted by comparing the label associated with each edge in each path with the labels of the edges which contain a restaurant.</p>
+<p>Method <code>paths</code> finds all possible paths between any two
+nodes, where a <em>path</em> is defined as a sequence of distinct and
+adjacent nodes. Because the restaurants are specific edges, each path is
+converted to a <em>walk</em>, which is a path defined as sequence of
+connected, non-repeating edges.</p>
+<p>In this case, the number of restaurants traversed by each path is
+counted by comparing the label associated with each edge in each path
+with the labels of the edges which contain a restaurant.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get all paths from A to B</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> V[[<span class="dv">1</span>]]</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> V[[<span class="dv">25</span>]]</span>
@@ -225,7 +451,10 @@ div.csl-indent {
 </div>
 <div id="solution-found-by-rdecision" class="section level1">
 <h1>Solution found by <code>rdecision</code></h1>
-<p>The number of paths which pass through exactly one Big Burger is 23. In total there are 70 paths from A to B, with the number of restaurants <span class="math inline">\(n\)</span>, traversed by each path as follows:</p>
+<p>The number of paths which pass through exactly one Big Burger is 23.
+In total there are 70 paths from A to B, with the number of restaurants
+<span class="math inline">\(n\)</span>, traversed by each path as
+follows:</p>
 <table>
 <thead>
 <tr class="header">
@@ -259,13 +488,21 @@ div.csl-indent {
 </div>
 <div id="provided-solution" class="section level1">
 <h1>Provided solution</h1>
-<p>Yolanda’s estimate is closest - there are 23 shortest routes from A to B that pass through exactly one Big Burger. One way to solve this kind of puzzle is to systematically work from A and keep track of how many ways there are of reaching each point. With this problem, you should keep a separate count of how many ways there are of reaching each point after (a) zero or (b) one Big Burger visits. For line segments that contain a Big Burger, (b) becomes equal to (a) then becomes equal to 0 with the old value for (b) effectively discarded.</p>
+<p>Yolanda’s estimate is closest - there are 23 shortest routes from A
+to B that pass through exactly one Big Burger. One way to solve this
+kind of puzzle is to systematically work from A and keep track of how
+many ways there are of reaching each point. With this problem, you
+should keep a separate count of how many ways there are of reaching each
+point after (a) zero or (b) one Big Burger visits. For line segments
+that contain a Big Burger, (b) becomes equal to (a) then becomes equal
+to 0 with the old value for (b) effectively discarded.</p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
 <div id="refs" class="references csl-bib-body" line-spacing="2">
 <div id="ref-bodycombe2020" class="csl-entry">
-<div class="csl-left-margin">1. </div><div class="csl-right-inline">Bodycombe, D. Burger run. <em>New Scientist</em> <strong>246,</strong> 54 (2020).</div>
+<div class="csl-left-margin">1. </div><div class="csl-right-inline">Bodycombe, D. Burger run. <em>New
+Scientist</em> <strong>246,</strong> 54 (2020).</div>
 </div>
 </div>
 </div>
