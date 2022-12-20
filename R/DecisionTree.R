@@ -497,7 +497,7 @@ DecisionTree <- R6::R6Class(
             label = v$label(),
             x = grid::unit(gx(XY[i,"x"]),"cm"),
             y = grid::unit(gy(XY[i,"y"]+a/3),"cm")+grid::unit(0.4,"char"),
-            just = c("right", "bottom"),
+            just = c("left", "bottom"),
             gp = grid::gpar(fontsize=fontsize)
           )
         }
