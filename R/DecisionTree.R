@@ -540,13 +540,13 @@ DecisionTree <- R6::R6Class(
         y = grid::unit(gy(y.target),"cm")
       )
       # add label
-      # grid::grid.text(
-      #   label = e$label(),
-      #   x = grid::unit(gx(x.joint),"cm")+grid::unit(0.2,"char"),
-      #   y = grid::unit(gy(y.joint),"cm")+grid::unit(0.4,"char"),
-      #   just = c("left", "bottom"),
-      #   gp = grid::gpar(fontsize=fontsize)
-      # )
+       grid::grid.text(
+         label = e$label(),
+         x = grid::unit(gx(x.joint),"cm")+grid::unit(0.2,"char"),
+         y = grid::unit(gy(y.joint),"cm")+grid::unit(0.4,"char"),
+         just = c("left", "bottom"),
+         gp = grid::gpar(fontsize=fontsize)
+       )
     })
     # draw the nodes
     sapply(private$V, function(v) {
